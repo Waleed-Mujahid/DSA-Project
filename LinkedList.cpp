@@ -51,7 +51,7 @@ class LinkedList
     void insertFront()
     {
         Course* newCourse= new Course;
-        newCourse->InsertCourseData();
+        newCourse->InsertUserCourseData();
         if(isEmpty())
         {
             first=newCourse;
@@ -68,7 +68,7 @@ class LinkedList
     void insert(std::string value)
     {
         Course* newCourse= new Course;
-        newCourse->InsertCourseData();
+        newCourse->InsertUserCourseData();
         SearchList(value);
         if(loc==NULL)
         {
@@ -89,6 +89,12 @@ class LinkedList
         {
             std::cout<<"Duplication of courses is not allowed"<<std::endl;
         }
+    }
+    void insertFile()
+    {
+        //<<<<<<<<<<<<<<<<<<<<<<<<
+        //<<<<<<<<<<<<<<<<<<<<<<<<  code to be inserted here
+        //<<<<<<<<<<<<<<<<<<<<<<<< 
     }
     void deleteNode(std::string value)
     {

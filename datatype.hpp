@@ -45,7 +45,7 @@ public:
         std::cout<< data.duration<<std::endl;
         std::cout<< data.isPaid<<std::endl;
     }
-    void InsertCourseData()//function to insert the data into the course
+    void InsertUserCourseData()//function to insert the data into the course
     {
         std::cin>>data.name;
         std::cin>>data.url;
@@ -57,6 +57,10 @@ public:
         std::cin>>data.duration;
         if(data.price!=0)
         data.isPaid==false;
+    }
+    void InsertFromFile()
+    {
+
     }
 };
 
@@ -76,6 +80,7 @@ public:
     void SearchList(std::string);//searches through list linearly
     void insertFront();
     void insert();
+    void insertFile();
     void deleteNode();
     void destroy();//basic linked list functionalities
 };
