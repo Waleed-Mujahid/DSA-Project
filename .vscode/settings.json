@@ -4,6 +4,11 @@
         "iterator": "cpp",
         "ostream": "cpp",
         "xlocnum": "cpp",
-        "xstring": "cpp"
+        "xstring": "cpp",
+        "fstream": "cpp",
+        "system_error": "cpp",
+        "type_traits": "cpp",
+        "xlocale": "cpp",
+        "xutility": "cpp"
     }
 }

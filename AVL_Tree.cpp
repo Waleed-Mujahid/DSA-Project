@@ -6,6 +6,7 @@
 
 using namespace std;
 
+
 bool stack::isEmpty()
 {
     return start == NULL;
