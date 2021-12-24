@@ -2,6 +2,8 @@
 #include <iostream>
 #include <string>
 
+using namespace std;
+
 // Creates various data types used to Implement AVL trees for our Dataset
 // Course_Data stores all the data of one Course
 // Course is a node which contains data and next pointer

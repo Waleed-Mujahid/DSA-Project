@@ -430,7 +430,6 @@ void AVL_Tree::insertFile(std::string s)
         flag = 1;
         line = "";
         getline(myFile, line, ',');
-
         for (int i = 0; i < line.length(); i++)
         {
             if (isalnum(line[i]) == 0 && isspace(line[i]) == 0 && ispunct(line[i]) == 0)
@@ -446,6 +445,7 @@ void AVL_Tree::insertFile(std::string s)
         {
             getline(myFile, line, '\n');
         }
+        transform(line.begin(), line.end(), line.begin(), ::tolower);
         newNode->data.name = line;
 
         getline(myFile, line, ',');
