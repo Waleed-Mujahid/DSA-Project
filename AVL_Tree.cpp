@@ -1,8 +1,10 @@
+#pragma once
 #include <iostream>
 #include <algorithm>
 #include <fstream>
 #include <sstream>
 #include "datatype.hpp"
+#include "trie.cpp"
 
 using namespace std;
 

@@ -9,6 +9,7 @@
         "system_error": "cpp",
         "type_traits": "cpp",
         "xlocale": "cpp",
-        "xutility": "cpp"
+        "xutility": "cpp",
+        "chrono": "cpp"
     }
 }
