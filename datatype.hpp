@@ -28,7 +28,6 @@ class Course
 {
 public:
     int index;
-    Course* next;  //for linked list use
     Course* lrank; //for heap
     Course* rrank;
     Course_data data;
@@ -138,14 +137,14 @@ public:
     void destroyTree(Course*);
     void deleteNode(Course*);
 
-    // functions to ballance AVL tree
+    // functions to balance AVL tree
 
     void leftRotation(Course*);
     void rightRotation(Course*); // Rotation functions
     void leftRightRotaion(Course*);
     void rightLeftRotaion(Course*);
 
-    int depth_of_tree(Course*); // Returns depth of a node. used for ballancing an AVL tree
+    int depth_of_tree(Course*); // Returns depth of a node. used for balancing an AVL tree
     void ballanceAVL(Course*, int);
 
     // File reading functions
