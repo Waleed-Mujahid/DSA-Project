@@ -11,12 +11,11 @@ int main()
     AVL_Tree udemy_dataset;
     udemy_dataset.insertFile("udemy_courses.csv");
    
-    auto start = chrono::high_resolution_clock::now();
     Trie t;
     t.readAvl(udemy_dataset.root);
-    auto stop = chrono::high_resolution_clock::now();
-    auto duration = chrono::duration_cast<chrono::microseconds>(stop - start);
-    cout << "Trie time complexity: " << (float)duration.count() / 1000000 << " seconds" << endl;
+    Course* temp;
+    t.search("value investing",temp) ;
+
 }
 
 // auto start = chrono::high_resolution_clock::now();

@@ -446,6 +446,7 @@ void AVL_Tree::insertFile(std::string s)
         else
         {
             getline(myFile, line, '\n');
+            line = "";
         }
         transform(line.begin(), line.end(), line.begin(), ::tolower);
         newNode->data.name = line;

@@ -2,9 +2,9 @@
 #include <iostream>
 #include "avl_tree.cpp"
 #include "datatype.hpp"
+#include "binary_Heap.cpp"
 #include <algorithm>
-#include <fstream>
-#include <sstream>
+#include <string>
 
 using namespace std;
 
@@ -13,6 +13,7 @@ class trei_Node
 public:
     char c;
     bool isWord;
+    binary_Heap priority_Q;
     trei_Node *arrayPtr;
     trei_Node()
     {
@@ -30,14 +31,14 @@ public:
         root = new trei_Node();
         root->arrayPtr = new trei_Node[26];
     }
-    void insert(string);
-    bool search(string);
+    void insert(string, Course*);
+    bool search(string, Course*);
     void readAvl(Course*);
+    string splitString(string);
 };
 
-void Trie::insert(string str)
+void Trie::insert(string str, Course* obj)
 {
-    //cout << str << endl;
     trei_Node *current = root;
     for (size_t i = 0; i < str.length(); i++)
     {
@@ -58,14 +59,18 @@ void Trie::insert(string str)
 
     }
     current->isWord = true;
+    current->priority_Q.insert(obj);
 }
 
-bool Trie::search(string str)
+bool Trie::search(string str, Course* temp)
 {
     int index;
     trei_Node *current = root;
     for (size_t i = 0; i < str.length(); i++)
     {
+        if (isspace(str[i]))
+            continue;
+
         index = str[i] - 'a';
         if (current->arrayPtr[index].c == '\0')
             return false;
@@ -73,7 +78,10 @@ bool Trie::search(string str)
         current = &current->arrayPtr[index];
     }
     if (current->isWord == true)
+    {
+        current->priority_Q.printList();
         return true;
+    }
     
     return false;
 }
@@ -87,8 +95,28 @@ void Trie::readAvl(Course* obj)
         return;
     }
     
-    insert(obj->data.name.substr(0,10));
+    str = splitString( obj->data.name );
+    insert(str, obj);
 
     readAvl(obj->LeftChild);
     readAvl(obj->RightChild);
+}
+
+string Trie::splitString(string str)
+{
+    int flag = -1;
+    char ch;
+    string subString = "";
+    for (size_t i = 0; i < str.length(); i++)
+    {
+        ch = str[i];
+        if (isspace(ch))
+            flag++;
+
+        subString = subString + ch;
+        if (flag == 1)
+            break;        
+    }
+
+    return subString;
 }
