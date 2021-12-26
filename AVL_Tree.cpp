@@ -1,8 +1,10 @@
+#pragma once
 #include <iostream>
 #include <algorithm>
 #include <fstream>
 #include <sstream>
 #include "datatype.hpp"
+#include "trie.cpp"
 
 using namespace std;
 
@@ -444,6 +446,7 @@ void AVL_Tree::insertFile(std::string s)
         else
         {
             getline(myFile, line, '\n');
+            line = "";
         }
         transform(line.begin(), line.end(), line.begin(), ::tolower);
         newNode->data.name = line;
