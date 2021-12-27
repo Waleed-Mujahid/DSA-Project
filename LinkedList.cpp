@@ -24,16 +24,18 @@ void LinkedList::printList()
     {
         while (temp->next != NULL)
         {
-            temp->PrintCourseData();
+            if(temp->data.counter)
+                cout << temp->data.name << endl;
             temp = temp->next;
         }
     }
 }
+
 void LinkedList::SearchList(std::string value)
 {
     loc = first;
     ploc = NULL;
-    while (loc != NULL && loc->data.name > value)
+    while (loc != NULL && loc->data.name != value)
     {
         ploc = loc;
         loc = loc->next;
@@ -61,26 +63,53 @@ void LinkedList::insertFront()
     length++;
 }
 
-void LinkedList::insert(Course *obj)
+void LinkedList::insertFront(Course *obj)
 {
+    Course *newCourse = new Course;
+    newCourse->data = obj->data;
     if (isEmpty())
     {
-        first = obj;
-        last = obj;
+        first = newCourse;
+        last = newCourse;
+        newCourse->next = NULL;
     }
     else
     {
-        last->next = obj;
-        last = obj;
+        newCourse->next = first;
+        first = newCourse;
+    }
+}
+
+void LinkedList::insert(Course *obj)
+{
+    Course *newCourse = new Course;
+    newCourse->data = obj->data;
+    SearchList(newCourse->data.name);
+    if (loc == NULL)
+    {
+        if (isEmpty())
+        {
+            first = newCourse;
+            last = newCourse;
+        }
+        else
+        {
+            last->next = newCourse;
+            last = newCourse;
+        }
+    }
+    else
+    {
+        loc->data.counter++;
     }
     length++;
 }
 
-void LinkedList::insertNewNode(std::string value)
+void LinkedList::insertNewNode(Course *obj)
 {
     Course *newCourse = new Course;
-    newCourse->InsertUserCourseData();
-    SearchList(value);
+    string val = obj->data.name;
+    SearchList(val);
     if (loc == NULL)
     {
         if (ploc == NULL)
@@ -98,7 +127,7 @@ void LinkedList::insertNewNode(std::string value)
     }
     else
     {
-        std::cout << "Duplication of courses is not allowed" << std::endl;
+        //loc->counter++;
     }
 }
 void LinkedList::insertFile(std::string s)

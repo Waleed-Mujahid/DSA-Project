@@ -32,7 +32,7 @@ public:
         root->arrayPtr = new trei_Node[26];
     }
     void insert(string, Course *);
-    bool search(string);
+    bool search(string, LinkedList*);
     void readAvl(Course *);
     void splitString(string, Course*);
 };
@@ -61,7 +61,7 @@ void Trie::insert(string str, Course *obj)
     current->priority_Q.insert(obj);
 }
 
-bool Trie::search(string str)
+bool Trie::search(string str, LinkedList* obj)
 {
     int index;
     trei_Node *current = root;
@@ -78,8 +78,7 @@ bool Trie::search(string str)
     }
     if (current->isWord == true)
     {
-        cout << "xD" << endl;
-        current->priority_Q.printList();
+        current->priority_Q.returnList(obj);
         return true;
     }
 

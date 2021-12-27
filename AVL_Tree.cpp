@@ -19,6 +19,7 @@ void stack::push(Course *node)
     NewNode->ptr = node;
     NewNode->next = start;
     start = NewNode;
+    len++;
 }
 
 Course *stack::pop()
@@ -30,6 +31,7 @@ Course *stack::pop()
     Course *value;
     value = start->ptr;
     start = start->next;
+    len--;
     delete loc;
     return value;
 }

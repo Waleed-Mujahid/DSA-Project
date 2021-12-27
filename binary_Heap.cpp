@@ -32,7 +32,7 @@ public:
     bool isEmpty();
     bool isFull();
     void insert(Course *);
-    void printList();
+    void returnList(LinkedList *);
     Course *getMax();
     void increaseCapacity();
 };
@@ -93,13 +93,15 @@ Course *binary_Heap::getMax()
     return temp;
 }
 
-void binary_Heap::printList()
+void binary_Heap::returnList(LinkedList* obj)
 {
     Course* temp = getMax();
-    for (size_t i = 1; i < size; i++)
+    for (size_t i = 1; i < size ; i++)
     {
         if (temp != NULL)
-            temp->PrintCourseData();
+        {
+            obj->insert(temp);
+        }
         temp = getMax();
     }
     puts("");

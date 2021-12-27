@@ -22,6 +22,7 @@ public:
     int publish_year;
     float duration;
     bool isPaid;
+    int counter = 0;
 };
 
 class Dictionary
@@ -91,9 +92,10 @@ public:
     LinkedList();
     bool isEmpty();
     void printList();
-    void SearchList(std::string); //searches through list linearly
+    void SearchList(string); //searches through list linearly
     void insertFront();
-    void insertNewNode(std::string);
+    void insertFront(Course*);
+    void insertNewNode(Course*);
     void insert(Course *);
     void deleteNode(std::string);
     void destroy(); //basic linked list functionalities
@@ -118,6 +120,7 @@ public:
 class stack
 {
 public:
+    int len = 0;
     stackNode *start;
     stackNode *loc;
     stack()

@@ -4,15 +4,20 @@
 #include "trie.cpp"
 #include "binary_Heap.cpp"
 #include "LinkedList.cpp"
+#include <string>
+#include <algorithm>
 
 class searchEngine
 {    
     AVL_Tree tree;
     Trie prefix_tree;
-    stack st;
+    stack *st = new stack();
     LinkedList list;
+    LinkedList *shortList;
 public:
-    searchEngine() {}
+    searchEngine() {
+        shortList = new LinkedList();
+    }
     void readFile(string);
     void searchExactCourse(string);
     void browseCourses(string);
@@ -31,7 +36,7 @@ void searchEngine::readFile(string str)
 {
     tree.insertFile(str);
     prefix_tree.readAvl(tree.root);
-    list.insertFile(str);
+    //list.insertFile(str);
 }
 
 void searchEngine::searchExactCourse(string str)
@@ -44,6 +49,7 @@ void searchEngine::browseCourses(string str)
 {
     transform(str.begin(), str.end(), str.begin(), ::tolower);
     splitString(str);
+    shortList->printList();
 }
 
 void searchEngine::searchCategoryWise(string str)
@@ -53,7 +59,6 @@ void searchEngine::searchCategoryWise(string str)
 
 void searchEngine::splitString(string str)
 {
-    int flag = 0;
     char ch;
     string subString = "";
     for (size_t i = 0; i < str.length(); i++)
@@ -61,12 +66,12 @@ void searchEngine::splitString(string str)
         ch = str[i];
         if (isspace(ch))
         {
-            prefix_tree.search(str);
+            prefix_tree.search(subString, shortList);
             subString = "";
             continue;
         }
 
         subString = subString + ch;
     }
-    prefix_tree.search(str);
+    prefix_tree.search(subString, shortList);
 }
