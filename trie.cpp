@@ -32,7 +32,7 @@ public:
         root->arrayPtr = new trei_Node[26];
     }
     void insert(string, Course*);
-    bool search(string, Course*);
+    bool search(string);
     void readAvl(Course*);
     string splitString(string);
 };
@@ -62,7 +62,7 @@ void Trie::insert(string str, Course* obj)
     current->priority_Q.insert(obj);
 }
 
-bool Trie::search(string str, Course* temp)
+bool Trie::search(string str)
 {
     int index;
     trei_Node *current = root;

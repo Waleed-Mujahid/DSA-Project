@@ -8,42 +8,41 @@
 
 using namespace std;
 
-
 bool stack::isEmpty()
 {
     return start == NULL;
 }
 
-void stack::push(Course* node)
+void stack::push(Course *node)
 {
-    stackNode* NewNode = new stackNode();
+    stackNode *NewNode = new stackNode();
     NewNode->ptr = node;
     NewNode->next = start;
     start = NewNode;
 }
 
-Course* stack::pop()
+Course *stack::pop()
 {
     if (isEmpty())
         return nullptr;
 
     loc = start;
-    Course* value;
+    Course *value;
     value = start->ptr;
     start = start->next;
     delete loc;
     return value;
 }
 
-void AVL_Tree::ballanceAVL(Course* current, int depth_difference)
+void AVL_Tree::ballanceAVL(Course *current, int depth_difference)
 {
-    
+
     if (depth_difference == 0 || depth_difference == -1 || depth_difference == 1)
         return; // AVL tree is already ballanced
 
     else if (depth_difference > 1) // Left subtree is more deep than right subtree of CURRENT NODE
     {
-        
+
         loc = current->LeftChild;
         // Checks if single rotaion required or double
         if (depth_of_tree(loc->RightChild) > depth_of_tree(loc->LeftChild))
@@ -54,7 +53,7 @@ void AVL_Tree::ballanceAVL(Course* current, int depth_difference)
 
     else // Right subtree is more deep than left subtree of CURRENT NODE
     {
-        
+
         loc = current->RightChild;
         // Checks if single rotaion required or double
         if (depth_of_tree(loc->LeftChild) > depth_of_tree(loc->RightChild))
@@ -68,23 +67,23 @@ void AVL_Tree::ballanceAVL(Course* current, int depth_difference)
     }
 }
 
-void AVL_Tree::leftRightRotaion(Course* x)
+void AVL_Tree::leftRightRotaion(Course *x)
 {
     leftRotation(x->LeftChild);
     rightRotation(x);
 }
 
-void AVL_Tree::rightLeftRotaion(Course* x)
+void AVL_Tree::rightLeftRotaion(Course *x)
 {
     rightRotation(x->RightChild);
     leftRotation(x);
 }
 
-void AVL_Tree::leftRotation(Course* x)
+void AVL_Tree::leftRotation(Course *x)
 {
-    
+
     search(x); // Search for node X to get its logical predecessor
-    Course* y = x->RightChild;
+    Course *y = x->RightChild;
 
     // Put y in the place of X
     if (ploc == NULL)
@@ -99,10 +98,10 @@ void AVL_Tree::leftRotation(Course* x)
     y->LeftChild = x;
 }
 
-void AVL_Tree::rightRotation(Course* x)
+void AVL_Tree::rightRotation(Course *x)
 {
     search(x); // Search for node X to get its logical predecessor
-    Course* y = x->LeftChild;
+    Course *y = x->LeftChild;
 
     // Put y in the place of X
     if (ploc == NULL)
@@ -118,7 +117,7 @@ void AVL_Tree::rightRotation(Course* x)
 }
 
 // Deletes entire BST
-void AVL_Tree::destroyTree(Course* current)
+void AVL_Tree::destroyTree(Course *current)
 {
     if (current != NULL) // Traverses tree in Post order
     {
@@ -140,19 +139,17 @@ bool AVL_Tree::IsEmpty()
     return root == NULL;
 }
 
-void AVL_Tree::search(Course* obj)
+void AVL_Tree::searchCourse(string str)
 {
-    string str = obj->data.name;
+    transform(str.begin(), str.end(), str.begin(), ::tolower);
+
     if (IsEmpty())
         return;
 
-    
     //Initialize loc and ploc
     ploc = NULL;
     loc = root;
     string temp_Comparison;
-    s.push(loc);
-
 
     //Traverse Tree to the end node or untill the value is found
     while (loc != NULL && loc->data.name != str)
@@ -162,16 +159,48 @@ void AVL_Tree::search(Course* obj)
 
         //If value is greater than the value in current node go to right
         if (str > temp_Comparison)
-            loc = loc->RightChild;        
-        
-        else        //Otherwise go to the left
+            loc = loc->RightChild;
+
+        else //Otherwise go to the left
+            loc = loc->LeftChild;
+
+    }
+
+    if (loc != NULL)
+        loc->PrintCourseData();
+    else 
+        cout << "Course not found." << endl;
+}
+void AVL_Tree::search(Course *obj)
+{
+    string str = obj->data.name;
+    if (IsEmpty())
+        return;
+
+    //Initialize loc and ploc
+    ploc = NULL;
+    loc = root;
+    string temp_Comparison;
+    s.push(loc);
+
+    //Traverse Tree to the end node or untill the value is found
+    while (loc != NULL && loc->data.name != str)
+    {
+        ploc = loc;
+        temp_Comparison = loc->data.name;
+
+        //If value is greater than the value in current node go to right
+        if (str > temp_Comparison)
+            loc = loc->RightChild;
+
+        else //Otherwise go to the left
             loc = loc->LeftChild;
 
         s.push(loc);
     }
 }
 
-void AVL_Tree::Insert(Course* obj)
+void AVL_Tree::Insert(Course *obj)
 {
     string str = obj->data.name;
     obj->data.course_id = ++len;
@@ -193,14 +222,14 @@ void AVL_Tree::Insert(Course* obj)
                 ploc->LeftChild = obj;
         }
 
-        Course* temp = NULL;
-        int depth_Diff = 0;        
-        
+        Course *temp = NULL;
+        int depth_Diff = 0;
+
         while (!s.isEmpty())
         {
             temp = s.pop();
             if (temp != NULL)
-               depth_Diff = - depth_of_tree(temp->RightChild) + depth_of_tree(temp->LeftChild);
+                depth_Diff = -depth_of_tree(temp->RightChild) + depth_of_tree(temp->LeftChild);
 
             if (depth_Diff > 1 || depth_Diff < -1)
                 break;
@@ -209,7 +238,7 @@ void AVL_Tree::Insert(Course* obj)
     }
 }
 
-void AVL_Tree::PreOrder(Course* temp)
+void AVL_Tree::PreOrder(Course *temp)
 {
 
     if (temp == NULL)
@@ -225,12 +254,12 @@ void AVL_Tree::PreOrder(Course* temp)
     PreOrder(temp->RightChild);
 }
 
-void AVL_Tree::InOrder(Course* temp)
+void AVL_Tree::InOrder(Course *temp)
 {
 
     if (IsEmpty())
         cout << endl
-        << "Tree is empty." << endl;
+             << "Tree is empty." << endl;
 
     if (temp == NULL)
     {
@@ -245,7 +274,7 @@ void AVL_Tree::InOrder(Course* temp)
     InOrder(temp->RightChild);
 }
 
-void AVL_Tree::PostOrder(Course* temp)
+void AVL_Tree::PostOrder(Course *temp)
 {
     if (temp == NULL)
     {
@@ -260,7 +289,7 @@ void AVL_Tree::PostOrder(Course* temp)
     temp->PrintCourseData();
 }
 
-int AVL_Tree::height_of_tree(Course* temp)
+int AVL_Tree::height_of_tree(Course *temp)
 {
     if (temp == NULL)
     {
@@ -274,7 +303,7 @@ int AVL_Tree::height_of_tree(Course* temp)
     }
 }
 
-int AVL_Tree::depth_of_tree(Course* temp)
+int AVL_Tree::depth_of_tree(Course *temp)
 {
     if (temp == NULL)
     {
@@ -288,7 +317,7 @@ int AVL_Tree::depth_of_tree(Course* temp)
     }
 }
 
-void AVL_Tree::deleteNode(Course* obj)
+void AVL_Tree::deleteNode(Course *obj)
 {
     string str = obj->data.name;
     search(obj);
@@ -330,8 +359,8 @@ void AVL_Tree::deleteNode(Course* obj)
         }
         else
         {
-            Course* tploc = ploc;
-            Course* tloc = loc;
+            Course *tploc = ploc;
+            Course *tloc = loc;
             ploc = loc;
             loc = loc->LeftChild;
 
@@ -364,7 +393,7 @@ void AVL_Tree::deleteNode(Course* obj)
             delete tloc;
         }
 
-        Course* temp = NULL;
+        Course *temp = NULL;
         int depth_Diff = 0;
         s.pop(); // Deleted node stored in stack;
         while (!s.isEmpty())
@@ -428,7 +457,7 @@ void AVL_Tree::insertFile(std::string s)
     int flag;
     while (myFile.good())
     {
-        Course* newNode = new Course();
+        Course *newNode = new Course();
         flag = 1;
         line = "";
         getline(myFile, line, ',');

@@ -152,4 +152,8 @@ public:
     int stringToint(string);
     int indexLevel(string);
     void insertFile(string);
+
+
+    // Searching functions for strings
+    void searchCourse(string);
 };
