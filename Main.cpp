@@ -11,7 +11,5 @@ int main()
 {
     searchEngine obj;
     obj.readFile("udemy_courses.csv");
-    //obj.searchExactCourse("mortgage acceleration");
-    obj.browseCourses("web react");
-    obj.browseCourses("node");
+
 }

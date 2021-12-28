@@ -100,7 +100,7 @@ Course *binary_Heap::getMax()
             parent = rChild;
             lChild = parent * 2, rChild = parent * 2 + 1;
         }
-        
+
         if (parent > size || lChild > size || rChild > size)
             break;
 
@@ -115,7 +115,7 @@ Course *binary_Heap::getMax()
 void binary_Heap::returnList(LinkedList *obj)
 {
     Course *temp = getMax();
-    for (size_t i = 1; i < size; i++)
+    while(!isEmpty())
     {
         if (temp != NULL)
         {

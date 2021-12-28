@@ -16,14 +16,24 @@ bool LinkedList::isEmpty()
 {
     return first == NULL;
 }
-void LinkedList::printList()
+void LinkedList::printList(int numOfTimes = 0)
 {
     int x = 0;
     Course *temp = first;
-    if (!isEmpty())
+    if (isEmpty())
+        return;
+
+    if (numOfTimes == 0)
     {
-        for (size_t i = 0; i < 3; i++)
-        //while (temp->next != NULL)
+        while (temp->next != NULL)
+        {
+            temp->PrintCourseData();
+            temp = temp->next;
+        }
+    }
+    else
+    {
+        for (size_t i = 0; i < numOfTimes; i++)
         {
             temp->PrintCourseData();
             temp = temp->next;

@@ -91,7 +91,7 @@ public:
     Course *loc;
     LinkedList();
     bool isEmpty();
-    void printList();
+    void printList(int);
     void SearchList(string); //searches through list linearly
     void insertFront();
     void insertFront(Course*);

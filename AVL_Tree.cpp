@@ -260,9 +260,11 @@ void AVL_Tree::InOrder(Course *temp)
 {
 
     if (IsEmpty())
-        cout << endl
-             << "Tree is empty." << endl;
-
+    {
+        cout << endl << "Tree is empty." << endl;
+        return;
+    }
+    
     if (temp == NULL)
     {
         //Base Case

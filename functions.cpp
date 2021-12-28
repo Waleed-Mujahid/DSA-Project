@@ -14,7 +14,8 @@ class searchEngine
     stack *st = new stack();
     LinkedList list;
     binary_Heap max_heap;
-
+    void traverseAVL(int, Course*);
+    void splitString(string, LinkedList*);
 public:
     searchEngine()
     {
@@ -23,21 +24,44 @@ public:
     void searchExactCourse(string);
     void browseCourses(string);
     void searchCategoryWise(string);
-    void splitString(string, LinkedList*);
+    void printCourses_A_Z();
     void searchFreeCourses();
-    void printCourseNames();
 };
 
-void searchEngine::printCourseNames()
+void searchEngine::traverseAVL(int parameter, Course* temp)
 {
-    list.printList();
+    if (temp == NULL)
+        return;
+
+    traverseAVL(parameter, temp->LeftChild);
+    traverseAVL(parameter, temp->RightChild);
+
+    if (temp->data.price == 0)
+        max_heap.insert(temp, temp->data.subscribers);
+
+}  
+
+void searchEngine::searchFreeCourses()
+{
+    // Return free courses Max_heap wrt popularity
+    traverseAVL(0, tree.root);
+    LinkedList *shortList = new LinkedList();
+    // Creates sorted list
+    max_heap.returnList(shortList);
+    shortList->printList(2);
+    shortList->destroy();
+}
+
+void searchEngine::printCourses_A_Z()
+{
+    tree.InOrder(tree.root);
 }
 
 void searchEngine::readFile(string str)
 {
     tree.insertFile(str);
     prefix_tree.readAvl(tree.root);
-    //list.insertFile(str);
+    list.insertFile(str);
 }
 
 void searchEngine::searchExactCourse(string str)
@@ -53,6 +77,7 @@ void searchEngine::browseCourses(string str)
     splitString(str, shortList);
     // Linked list of courses returned, unsorted
 
+    // Binary heap used for sorting
     Course *temp = shortList->first;
     while (temp != NULL)
     {
@@ -63,7 +88,7 @@ void searchEngine::browseCourses(string str)
 
     // Creates sorted list
     max_heap.returnList(shortList);
-    shortList->printList();
+    //shortList->printList(3);
     shortList->destroy();
 }
 
