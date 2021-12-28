@@ -36,7 +36,7 @@ void searchEngine::traverseAVL(int parameter, Course* temp)
     traverseAVL(parameter, temp->LeftChild);
     traverseAVL(parameter, temp->RightChild);
 
-    if (temp->data.price == 0)
+    if (temp->data.price == 0 && temp->data.isUdemy)
         max_heap.insert(temp, temp->data.subscribers);
 
 }  
@@ -48,7 +48,7 @@ void searchEngine::searchFreeCourses()
     LinkedList *shortList = new LinkedList();
     // Creates sorted list
     max_heap.returnList(shortList);
-    shortList->printList(2);
+    shortList->printList(3);
     shortList->destroy();
 }
 
@@ -63,7 +63,7 @@ void searchEngine::readData()
     prefix_tree.readAvl(tree.root);
     list.insertFile("udemy_courses.csv");
     tree.insertCourseraDataset();
-    tree.InOrder(tree.root);
+
 }
 
 void searchEngine::searchExactCourse(string str)

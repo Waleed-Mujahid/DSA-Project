@@ -11,4 +11,5 @@ int main()
 {
     searchEngine obj;
     obj.readData();
+    obj.searchFreeCourses();
 }
