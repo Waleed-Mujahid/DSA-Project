@@ -200,7 +200,7 @@ void LinkedList::insertFile(std::string s)
 
         getline(myFile, line, '\n');
         newNode->data.Category_id = indexSubject(line);
-        this->insert(newNode);
+        this->insertFront(newNode);
     }
 }
 void LinkedList::deleteNode(std::string value)

@@ -12,6 +12,7 @@ using namespace std;
 class Course_data
 {
 public:
+    bool isUdemy;
     std::string name;
     std::string url;
     int Category_id;   // using h
@@ -22,7 +23,16 @@ public:
     int publish_year;
     float duration;
     bool isPaid;
-    int counter = 0;
+    int counter;
+    float rating;
+    string difficulty;
+    string tags[2];
+
+    Course_data()
+    {
+        isUdemy = false;
+        counter = 0;
+    }
 };
 
 class Dictionary
@@ -50,7 +60,7 @@ public:
     int index;
     Course *Heap_Root;
     Course_data data;
-    Course* next;
+    Course *next;
     Course *LeftChild;
     Course *RightChild;
     void PrintCourseData() //function to print the data of the course
@@ -58,13 +68,21 @@ public:
         std::cout << "Course_ID: " << data.course_id << std::endl;
         std::cout << "Course title: " << data.name << std::endl;
         std::cout << "Link: " << data.url << std::endl;
-        std::cout << "Category_ID: " << data.Category_id << std::endl;
-        std::cout << "Price: " << data.price << std::endl;
-        std::cout << "Number of students enrolled: " << data.subscribers << std::endl;
-        std::cout << "Year published: " << data.publish_year << std::endl;
-        std::cout << "Hours to complete: " << data.duration << std::endl;
-        std::cout << "isPaid: " << data.isPaid << std::endl
-                  << std::endl;
+        std::cout << "Difficulty level : " << data.difficulty << std::endl;
+        if (data.isUdemy)
+        {
+            std::cout << "Category : " << data.Category_id << std::endl;
+            std::cout << "Price: " << data.price << std::endl;
+            std::cout << "Number of students enrolled: " << data.subscribers << std::endl;
+            std::cout << "Year published: " << data.publish_year << std::endl;
+            std::cout << "Hours to complete: " << data.duration << std::endl;
+            std::cout << "isPaid: " << data.isPaid << std::endl << std::endl;
+        }
+        else
+        {
+            cout << "Rating : " << data.rating << endl;
+            cout << "Tags : " << data.tags[0] << ", " << data.tags[1] << endl << endl;
+        }
     }
     void InsertUserCourseData() //function to insert the data into the course
     {
@@ -94,8 +112,8 @@ public:
     void printList(int);
     void SearchList(string); //searches through list linearly
     void insertFront();
-    void insertFront(Course*);
-    void insertNewNode(Course*);
+    void insertFront(Course *);
+    void insertNewNode(Course *);
     void insert(Course *);
     void deleteNode(std::string);
     void destroy(); //basic linked list functionalities
@@ -172,8 +190,10 @@ public:
     // File reading functions
     int indexSubject(string);
     int stringToint(string);
+    float stringToFloat(string);
     int indexLevel(string);
-    void insertFile(string);
+    void insertUdemyDataset();
+    void insertCourseraDataset();
 
     // Searching functions for strings
     void searchCourse(string);

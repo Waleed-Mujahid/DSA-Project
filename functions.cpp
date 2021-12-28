@@ -20,7 +20,7 @@ public:
     searchEngine()
     {
     }
-    void readFile(string);
+    void readData();
     void searchExactCourse(string);
     void browseCourses(string);
     void searchCategoryWise(string);
@@ -57,11 +57,13 @@ void searchEngine::printCourses_A_Z()
     tree.InOrder(tree.root);
 }
 
-void searchEngine::readFile(string str)
+void searchEngine::readData()
 {
-    tree.insertFile(str);
+    tree.insertUdemyDataset();
     prefix_tree.readAvl(tree.root);
-    list.insertFile(str);
+    list.insertFile("udemy_courses.csv");
+    tree.insertCourseraDataset();
+    tree.InOrder(tree.root);
 }
 
 void searchEngine::searchExactCourse(string str)
