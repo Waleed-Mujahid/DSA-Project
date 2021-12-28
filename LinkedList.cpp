@@ -22,10 +22,10 @@ void LinkedList::printList()
     Course *temp = first;
     if (!isEmpty())
     {
-        while (temp->next != NULL)
+        for (size_t i = 0; i < 3; i++)
+        //while (temp->next != NULL)
         {
-            if(temp->data.counter)
-                cout << temp->data.name << endl;
+            temp->PrintCourseData();
             temp = temp->next;
         }
     }
@@ -35,7 +35,7 @@ void LinkedList::SearchList(std::string value)
 {
     loc = first;
     ploc = NULL;
-    while (loc != NULL && loc->data.name != value)
+    while (loc != NULL && loc->data.name.compare(value))
     {
         ploc = loc;
         loc = loc->next;
@@ -85,6 +85,7 @@ void LinkedList::insert(Course *obj)
     Course *newCourse = new Course;
     newCourse->data = obj->data;
     SearchList(newCourse->data.name);
+
     if (loc == NULL)
     {
         if (isEmpty())
@@ -233,14 +234,16 @@ void LinkedList::deleteNode(std::string value)
 }
 void LinkedList::destroy()
 {
-    Course *temp;
+    Course *temp = first;
     while (first != NULL)
     {
         temp = first;
         first = first->next;
-        delete temp;
+        temp->next = NULL;
     }
+    first = NULL;
     last = NULL;
+    length = 0;
 }
 
 int LinkedList::indexSubject(std::string str)

@@ -10,7 +10,7 @@ using namespace std;
 class q_Node
 {
 public:
-    int subscribers;
+    int count;
     Course *course;
 };
 
@@ -21,17 +21,18 @@ private:
     int index, lChild, rChild, parent, size;
 
 public:
-    binary_Heap(int SIZE = 10)
+    binary_Heap(int SIZE = 5)
     {
         index = 1;
-        arrPtr = new q_Node[SIZE];
         size = SIZE;
+        arrPtr = new q_Node[size];
+
         for (size_t i = 1; i < size; i++)
-            arrPtr[i].subscribers = -9999;
+            arrPtr[i].count = -9999;
     }
     bool isEmpty();
     bool isFull();
-    void insert(Course *);
+    void insert(Course *, int);
     void returnList(LinkedList *);
     Course *getMax();
     void increaseCapacity();
@@ -46,7 +47,7 @@ void binary_Heap::increaseCapacity()
         newArray[i] = arrPtr[i];
 
     for (size_t i = size; i < size * 2; i++)
-        newArray[i].subscribers = -9999;
+        newArray[i].count = -9999;
 
     size = size * 2;
     arrPtr = newArray;
@@ -66,10 +67,28 @@ Course *binary_Heap::getMax()
     Course *temp = arrPtr[1].course;
     parent = 1;
     lChild = parent * 2, rChild = parent * 2 + 1;
+
+    int flag = 0;
     do
     {
+        if (arrPtr[lChild].count > arrPtr[rChild].count)
+            flag = 1;
 
-        if (arrPtr[lChild].subscribers > arrPtr[rChild].subscribers)
+        else if (arrPtr[lChild].count == arrPtr[rChild].count)
+        {
+            if (arrPtr[lChild].course == NULL || arrPtr[rChild].course == NULL)
+                flag = 0;
+
+            else if (arrPtr[lChild].course->data.subscribers > arrPtr[rChild].course->data.subscribers )
+                flag = 1;
+            else 
+                flag = 0;
+        }
+        else 
+            flag = 0;
+
+
+        if (flag)
         {
             arrPtr[parent] = arrPtr[lChild];
             parent = lChild;
@@ -81,22 +100,22 @@ Course *binary_Heap::getMax()
             parent = rChild;
             lChild = parent * 2, rChild = parent * 2 + 1;
         }
-
+        
         if (parent > size || lChild > size || rChild > size)
             break;
 
-    } while (arrPtr[lChild].subscribers != -9999 || arrPtr[rChild].subscribers != -9999);
+    } while (arrPtr[lChild].count != -9999 || arrPtr[rChild].count != -9999);
 
-    arrPtr[parent].subscribers = -9999;
+    arrPtr[parent].count = -9999;
     arrPtr[parent].course = NULL;
     index--;
     return temp;
 }
 
-void binary_Heap::returnList(LinkedList* obj)
+void binary_Heap::returnList(LinkedList *obj)
 {
-    Course* temp = getMax();
-    for (size_t i = 1; i < size ; i++)
+    Course *temp = getMax();
+    for (size_t i = 1; i < size; i++)
     {
         if (temp != NULL)
         {
@@ -112,22 +131,22 @@ bool binary_Heap::isEmpty()
     return index == 0;
 }
 
-void binary_Heap::insert(Course *obj)
+void binary_Heap::insert(Course *obj, int parameter)
 {
     if (isFull())
         increaseCapacity();
 
     int child = ++index;
-    arrPtr[child].subscribers = obj->data.subscribers;
+    arrPtr[child].count = parameter;
     arrPtr[child].course = obj;
     parent = child / 2;
 
-    do {        
-        if (arrPtr[child].subscribers > arrPtr[parent].subscribers)
-            swap( arrPtr[child], arrPtr[parent]);
+    do
+    {
+        if (arrPtr[child].count > arrPtr[parent].count)
+            swap(arrPtr[child], arrPtr[parent]);
 
         child = parent;
         parent = child / 2;
     } while (parent >= 1);
-
 }

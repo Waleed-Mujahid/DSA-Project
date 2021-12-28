@@ -58,7 +58,7 @@ void Trie::insert(string str, Course *obj)
             current = &current->arrayPtr[index];
     }
     current->isWord = true;
-    current->priority_Q.insert(obj);
+    current->priority_Q.insert(obj, obj->data.subscribers);
 }
 
 bool Trie::search(string str, LinkedList* obj)

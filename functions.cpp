@@ -8,21 +8,22 @@
 #include <algorithm>
 
 class searchEngine
-{    
+{
     AVL_Tree tree;
     Trie prefix_tree;
     stack *st = new stack();
     LinkedList list;
-    LinkedList *shortList;
+    binary_Heap max_heap;
+
 public:
-    searchEngine() {
-        shortList = new LinkedList();
+    searchEngine()
+    {
     }
     void readFile(string);
     void searchExactCourse(string);
     void browseCourses(string);
     void searchCategoryWise(string);
-    void splitString(string);
+    void splitString(string, LinkedList*);
     void searchFreeCourses();
     void printCourseNames();
 };
@@ -48,8 +49,22 @@ void searchEngine::searchExactCourse(string str)
 void searchEngine::browseCourses(string str)
 {
     transform(str.begin(), str.end(), str.begin(), ::tolower);
-    splitString(str);
+    LinkedList *shortList = new LinkedList();
+    splitString(str, shortList);
+    // Linked list of courses returned, unsorted
+
+    Course *temp = shortList->first;
+    while (temp != NULL)
+    {
+        max_heap.insert(temp, temp->data.counter);
+        temp = temp->next;
+    }
+    shortList->destroy(); // Destroy unsorted list
+
+    // Creates sorted list
+    max_heap.returnList(shortList);
     shortList->printList();
+    shortList->destroy();
 }
 
 void searchEngine::searchCategoryWise(string str)
@@ -57,7 +72,7 @@ void searchEngine::searchCategoryWise(string str)
 
 }
 
-void searchEngine::splitString(string str)
+void searchEngine::splitString(string str, LinkedList * shortList)
 {
     char ch;
     string subString = "";

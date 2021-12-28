@@ -12,5 +12,6 @@ int main()
     searchEngine obj;
     obj.readFile("udemy_courses.csv");
     //obj.searchExactCourse("mortgage acceleration");
-    obj.browseCourses("forex trading");
+    obj.browseCourses("web react");
+    obj.browseCourses("node");
 }
