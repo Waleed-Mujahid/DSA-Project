@@ -31,13 +31,13 @@ public:
         root = new trei_Node();
         root->arrayPtr = new trei_Node[26];
     }
-    void insert(string, Course*);
-    bool search(string);
-    void readAvl(Course*);
-    string splitString(string);
+    void insert(string, Course *);
+    bool search(string, LinkedList*);
+    void readAvl(Course *);
+    void splitString(string, Course*);
 };
 
-void Trie::insert(string str, Course* obj)
+void Trie::insert(string str, Course *obj)
 {
     trei_Node *current = root;
     for (size_t i = 0; i < str.length(); i++)
@@ -56,13 +56,12 @@ void Trie::insert(string str, Course* obj)
         }
         else
             current = &current->arrayPtr[index];
-
     }
     current->isWord = true;
-    current->priority_Q.insert(obj);
+    current->priority_Q.insert(obj, obj->data.subscribers);
 }
 
-bool Trie::search(string str)
+bool Trie::search(string str, LinkedList* obj)
 {
     int index;
     trei_Node *current = root;
@@ -79,14 +78,14 @@ bool Trie::search(string str)
     }
     if (current->isWord == true)
     {
-        current->priority_Q.printList();
+        current->priority_Q.returnList(obj);
         return true;
     }
-    
+
     return false;
 }
 
-void Trie::readAvl(Course* obj)
+void Trie::readAvl(Course *obj)
 {
     string str;
     if (obj == NULL)
@@ -94,29 +93,28 @@ void Trie::readAvl(Course* obj)
         //Base Case
         return;
     }
-    
-    str = splitString( obj->data.name );
-    insert(str, obj);
+
+    splitString(obj->data.name, obj);
 
     readAvl(obj->LeftChild);
     readAvl(obj->RightChild);
 }
 
-string Trie::splitString(string str)
+void Trie::splitString(string str, Course* obj)
 {
-    int flag = -1;
+    int flag = 0;
     char ch;
     string subString = "";
     for (size_t i = 0; i < str.length(); i++)
     {
         ch = str[i];
         if (isspace(ch))
-            flag++;
+        {
+            insert(subString, obj);
+            subString = "";
+            continue;
+        }
 
         subString = subString + ch;
-        if (flag == 1)
-            break;        
     }
-
-    return subString;
 }

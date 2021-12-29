@@ -10,6 +10,6 @@ using namespace std;
 int main()
 {
     searchEngine obj;
-    obj.readFile("udemy_courses.csv");
-    obj.browseCourses("web design");
+    obj.readData();
+    obj.searchFreeCourses();
 }

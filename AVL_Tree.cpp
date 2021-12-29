@@ -5,6 +5,7 @@
 #include <sstream>
 #include "datatype.hpp"
 #include "trie.cpp"
+#include "Windows.h"
 
 using namespace std;
 
@@ -19,6 +20,7 @@ void stack::push(Course *node)
     NewNode->ptr = node;
     NewNode->next = start;
     start = NewNode;
+    len++;
 }
 
 Course *stack::pop()
@@ -30,6 +32,7 @@ Course *stack::pop()
     Course *value;
     value = start->ptr;
     start = start->next;
+    len--;
     delete loc;
     return value;
 }
@@ -163,12 +166,11 @@ void AVL_Tree::searchCourse(string str)
 
         else //Otherwise go to the left
             loc = loc->LeftChild;
-
     }
 
     if (loc != NULL)
         loc->PrintCourseData();
-    else 
+    else
         cout << "Course not found." << endl;
 }
 void AVL_Tree::search(Course *obj)
@@ -240,7 +242,6 @@ void AVL_Tree::Insert(Course *obj)
 
 void AVL_Tree::PreOrder(Course *temp)
 {
-
     if (temp == NULL)
     {
         //Base Case
@@ -258,8 +259,11 @@ void AVL_Tree::InOrder(Course *temp)
 {
 
     if (IsEmpty())
+    {
         cout << endl
              << "Tree is empty." << endl;
+        return;
+    }
 
     if (temp == NULL)
     {
@@ -436,33 +440,47 @@ int AVL_Tree::stringToint(std::string str)
     return x;
 }
 
+float AVL_Tree::stringToFloat(string str)
+{
+    float x;
+    std::stringstream val(str);
+    val >> x;
+    return x;
+}
+
 int AVL_Tree::indexLevel(std::string str)
 {
     if (str.compare("Beginner Level"))
         return 1;
     else if (str.compare("Intermediate Level"))
         return 2;
-    else if (str.compare("Expert Level"))
+    else if (str.compare("Expert Level") || str.compare("Advanced Level"))
         return 3;
     else
         return 4;
 }
 
-void AVL_Tree::insertFile(std::string s)
+void AVL_Tree::insertUdemyDataset()
 {
-    std::ifstream myFile;
-    myFile.open(s);
+    string s = "udemy_courses.csv";
+    std::ifstream uFile;
+    uFile.open(s);
     string str = "";
     string line, str1, str2;
     int flag;
-    while (myFile.good())
+    while (uFile.good())
     {
         Course *newNode = new Course();
         flag = 1;
         line = "";
-        getline(myFile, line, ',');
+        getline(uFile, line, ',');
         for (int i = 0; i < line.length(); i++)
         {
+            if (::IsTextUnicode(line.c_str(), line.length(), NULL) == 1)
+            {
+                flag = 0;
+                break;
+            }
             if (isalnum(line[i]) == 0 && isspace(line[i]) == 0 && ispunct(line[i]) == 0)
             {
                 flag = 0;
@@ -474,39 +492,120 @@ void AVL_Tree::insertFile(std::string s)
             newNode->data.name = line;
         else
         {
-            getline(myFile, line, '\n');
+            getline(uFile, line, '\n');
             line = "";
         }
         transform(line.begin(), line.end(), line.begin(), ::tolower);
         newNode->data.name = line;
 
-        getline(myFile, line, ',');
+        getline(uFile, line, ',');
         newNode->data.url = line;
 
-        getline(myFile, line, ',');
+        getline(uFile, line, ',');
         if (line.compare("TRUE"))
             newNode->data.isPaid = true;
         else
             newNode->data.isPaid = false;
 
-        getline(myFile, line, ',');
+        getline(uFile, line, ',');
         newNode->data.price = stringToint(line);
 
-        getline(myFile, line, ',');
+        getline(uFile, line, ',');
         newNode->data.subscribers = stringToint(line);
 
-        getline(myFile, line, ',');
+        getline(uFile, line, ',');
+        newNode->data.difficulty = str;
         newNode->data.difficulty_id = indexLevel(line);
 
-        getline(myFile, line, ',');
+        getline(uFile, line, ',');
         newNode->data.duration = stringToint(line);
 
-        getline(myFile, line, ',');
+        getline(uFile, line, ',');
         str1 = line.substr(0, 4);
         newNode->data.publish_year = stringToint(str1);
 
-        getline(myFile, line, '\n');
+        getline(uFile, line, '\n');
         newNode->data.Category_id = indexSubject(line);
+
+        newNode->data.isUdemy = true;
+        Insert(newNode);
+    }
+}
+
+void AVL_Tree::insertCourseraDataset()
+{
+    string s = "coursera_courses.csv";
+    std::ifstream cFile;
+    cFile.open(s);
+    string str = "";
+    string line, str1, str2;
+    int flag;
+    while (cFile.good())
+    {
+        Course *newNode = new Course();
+        flag = 1;
+        line = "";
+
+        getline(cFile, line, ',');
+        // Ignore
+
+        getline(cFile, line, ',');
+        for (int i = 0; i < line.length(); i++)
+        {
+            if (::IsTextUnicode(line.c_str(), line.length(), NULL) == 1)
+            {
+                flag = 0;
+                break;
+            }
+            if (isalnum(line[i]) == 0 && isspace(line[i]) == 0 && ispunct(line[i]) == 0)
+            {
+                flag = 0;
+                break;
+            }
+        }
+
+        if (flag)
+        {
+            transform(line.begin(), line.end(), line.begin(), ::tolower);
+            newNode->data.name = line;
+        }
+        else
+        {
+            getline(cFile, line, '\n');
+            line = "";
+            continue;
+        }
+
+        getline(cFile, line, ',');
+        newNode->data.url = line;
+
+        getline(cFile, line, ',');
+        if (line == "None")
+            newNode->data.rating = 0;
+        else
+        {
+            newNode->data.rating = stringToFloat(line);
+        }
+
+        getline(cFile, line, ',');
+        newNode->data.difficulty = line;
+        newNode->data.difficulty_id = indexLevel(line);
+
+        getline(cFile, line, '\n');
+        if (line == "None")
+            break;
+
+        size_t i = 0;
+        for (; i < line.length(); i++)
+        {
+            if (line[i] == '.')
+                break;
+        }
+        str1 = line.substr(0, i);
+        str2 = line.substr(i + 2, line.length());
+        newNode->data.tags[0] = str1;
+        newNode->data.tags[1] = str2;
+
         Insert(newNode);
     }
 }
