@@ -36,5 +36,5 @@ void searchEngine::browseCourses(string str)
 
 void searchEngine::searchCategoryWise(string str)
 {
-    
+    //To be done via hash map by haider
 }
