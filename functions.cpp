@@ -95,11 +95,15 @@ void searchEngine::browseCourses(string str, int count = 2)
     shortList->destroy();
 }
 
+<<<<<<< HEAD
 void searchEngine::searchCategoryWise(string str)
 {
 }
 
 void searchEngine::splitString(string str, LinkedList *shortList)
+=======
+void searchEngine::splitString(string str, LinkedList * shortList)
+>>>>>>> ed8cef12d5f19343642f2571b3c62ec55ca95f3f
 {
     char ch;
     string subString = "";
@@ -119,3 +123,4 @@ void searchEngine::splitString(string str, LinkedList *shortList)
     prefix_tree.search(subString, shortList);
     //tags_Tree.search(subString, shortList);
 }
+
