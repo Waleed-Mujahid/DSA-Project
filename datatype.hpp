@@ -69,6 +69,7 @@ public:
         std::cout << "Course title: " << data.name << std::endl;
         std::cout << "Link: " << data.url << std::endl;
         std::cout << "Difficulty level : " << data.difficulty << std::endl;
+        cout << "Rating : " << data.rating << endl;
         if (data.isUdemy)
         {
             std::cout << "Category : " << data.Category_id << std::endl;
@@ -76,13 +77,13 @@ public:
             std::cout << "Number of students enrolled: " << data.subscribers << std::endl;
             std::cout << "Year published: " << data.publish_year << std::endl;
             std::cout << "Hours to complete: " << data.duration << std::endl;
-            std::cout << "isPaid: " << data.isPaid << std::endl << std::endl;
+            //std::cout << "isPaid: " << data.isPaid << std::endl << std::endl;
         }
         else
         {
-            cout << "Rating : " << data.rating << endl;
-            cout << "Tags : " << data.tags[0] << ", " << data.tags[1] << endl << endl;
+            cout << "Tags : " << data.tags[0] << ", " << data.tags[1] << endl ;
         }
+        cout << endl;
     }
     void InsertUserCourseData() //function to insert the data into the course
     {
@@ -167,6 +168,7 @@ public:
         loc = NULL;
         ploc = NULL;
     }
+    ~AVL_Tree();
     bool IsEmpty();
     void search(Course *);
     void Insert(Course *);

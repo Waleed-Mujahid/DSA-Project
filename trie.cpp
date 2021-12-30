@@ -3,8 +3,6 @@
 #include "avl_tree.cpp"
 #include "datatype.hpp"
 #include "binary_Heap.cpp"
-#include <algorithm>
-#include <string>
 
 using namespace std;
 
@@ -31,11 +29,29 @@ public:
         root = new trei_Node();
         root->arrayPtr = new trei_Node[26];
     }
+
     void insert(string, Course *);
-    bool search(string, LinkedList*);
+    bool search(string, LinkedList *);
     void readAvl(Course *);
-    void splitString(string, Course*);
+    void splitString(string, Course *);
+    void create_Tags_Tree(Course *);
+    int check(string);
 };
+
+int Trie::check(string str)
+{
+    int flag = 1;
+    string array[5] = {"the", "for","in", "and" , "at"};
+    for (size_t i = 0; i < 5; i++)
+    {
+        if (array[i] == str)
+        {
+            flag = 0;break;
+        }
+    }
+    
+    return flag;
+}
 
 void Trie::insert(string str, Course *obj)
 {
@@ -58,10 +74,12 @@ void Trie::insert(string str, Course *obj)
             current = &current->arrayPtr[index];
     }
     current->isWord = true;
-    current->priority_Q.insert(obj, obj->data.subscribers);
+    
+    if (check(str))
+        current->priority_Q.insert(obj, obj->data.rating);
 }
 
-bool Trie::search(string str, LinkedList* obj)
+bool Trie::search(string str, LinkedList *obj)
 {
     int index;
     trei_Node *current = root;
@@ -85,9 +103,27 @@ bool Trie::search(string str, LinkedList* obj)
     return false;
 }
 
+void Trie::create_Tags_Tree(Course *obj)
+{
+    if (obj == NULL)
+    {
+        //Base Case
+        return;
+    }
+
+    create_Tags_Tree(obj->LeftChild);
+    create_Tags_Tree(obj->RightChild);
+
+    if (obj->data.isUdemy == 0)
+    {
+        splitString(obj->data.tags[0], obj);
+        splitString(obj->data.tags[1], obj);
+    }
+}
+
 void Trie::readAvl(Course *obj)
 {
-    string str;
+
     if (obj == NULL)
     {
         //Base Case
@@ -95,12 +131,17 @@ void Trie::readAvl(Course *obj)
     }
 
     splitString(obj->data.name, obj);
+    if (obj->data.isUdemy == 0)
+    {
+        //splitString(obj->data.tags[0], obj);
+        //splitString(obj->data.tags[1], obj);
+    }
 
     readAvl(obj->LeftChild);
     readAvl(obj->RightChild);
 }
 
-void Trie::splitString(string str, Course* obj)
+void Trie::splitString(string str, Course *obj)
 {
     int flag = 0;
     char ch;

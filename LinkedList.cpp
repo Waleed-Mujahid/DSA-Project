@@ -16,7 +16,7 @@ bool LinkedList::isEmpty()
 {
     return first == NULL;
 }
-void LinkedList::printList(int numOfTimes = 0)
+void LinkedList::printList(int numOfTimes)
 {
     int x = 0;
     Course *temp = first;
@@ -33,8 +33,8 @@ void LinkedList::printList(int numOfTimes = 0)
     }
     else
     {
-        for (size_t i = 0; i < numOfTimes; i++)
-        {
+        for (size_t i = 0; i < numOfTimes && temp != NULL; i++)
+        {             
             temp->PrintCourseData();
             temp = temp->next;
         }
@@ -92,7 +92,7 @@ void LinkedList::insertFront(Course *obj)
 
 void LinkedList::insert(Course *obj)
 {
-    Course *newCourse = new Course;
+    Course *newCourse = new Course();
     newCourse->data = obj->data;
     SearchList(newCourse->data.name);
 

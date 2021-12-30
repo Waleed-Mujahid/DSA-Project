@@ -3,6 +3,7 @@
 #include <algorithm>
 #include <fstream>
 #include <sstream>
+#include <time.h>
 #include "datatype.hpp"
 #include "trie.cpp"
 #include "Windows.h"
@@ -468,6 +469,7 @@ void AVL_Tree::insertUdemyDataset()
     string str = "";
     string line, str1, str2;
     int flag;
+    float val;
     while (uFile.good())
     {
         Course *newNode = new Course();
@@ -514,7 +516,7 @@ void AVL_Tree::insertUdemyDataset()
         newNode->data.subscribers = stringToint(line);
 
         getline(uFile, line, ',');
-        newNode->data.difficulty = str;
+        newNode->data.difficulty = line;
         newNode->data.difficulty_id = indexLevel(line);
 
         getline(uFile, line, ',');
@@ -526,6 +528,11 @@ void AVL_Tree::insertUdemyDataset()
 
         getline(uFile, line, '\n');
         newNode->data.Category_id = indexSubject(line);
+
+        srand(newNode->data.subscribers);
+        val = rand() % 20 + 30;
+        val = (float)val / 10;
+        newNode->data.rating = val;
 
         newNode->data.isUdemy = true;
         Insert(newNode);
@@ -608,4 +615,9 @@ void AVL_Tree::insertCourseraDataset()
 
         Insert(newNode);
     }
+}
+
+AVL_Tree::~AVL_Tree()
+{
+    destroyTree(root);
 }

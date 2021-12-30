@@ -10,25 +10,26 @@
 class searchEngine
 {
     AVL_Tree tree;
-    Trie prefix_tree;
+    Trie prefix_tree, tags_Tree;
     stack *st = new stack();
     LinkedList list;
     binary_Heap max_heap;
-    void traverseAVL(int, Course*);
-    void splitString(string, LinkedList*);
+    void traverseAVL(int, Course *);
+    void splitString(string, LinkedList *);
+
 public:
     searchEngine()
     {
     }
     void readData();
     void searchExactCourse(string);
-    void browseCourses(string);
+    void browseCourses(string, int);
     void searchCategoryWise(string);
     void printCourses_A_Z();
     void searchFreeCourses();
 };
 
-void searchEngine::traverseAVL(int parameter, Course* temp)
+void searchEngine::traverseAVL(int parameter, Course *temp)
 {
     if (temp == NULL)
         return;
@@ -38,8 +39,7 @@ void searchEngine::traverseAVL(int parameter, Course* temp)
 
     if (temp->data.price == 0 && temp->data.isUdemy)
         max_heap.insert(temp, temp->data.subscribers);
-
-}  
+}
 
 void searchEngine::searchFreeCourses()
 {
@@ -60,10 +60,10 @@ void searchEngine::printCourses_A_Z()
 void searchEngine::readData()
 {
     tree.insertUdemyDataset();
-    prefix_tree.readAvl(tree.root);
-    list.insertFile("udemy_courses.csv");
     tree.insertCourseraDataset();
-
+    prefix_tree.readAvl(tree.root);
+    //tags_Tree.create_Tags_Tree(tree.root);
+    list.insertFile("udemy_courses.csv");
 }
 
 void searchEngine::searchExactCourse(string str)
@@ -72,7 +72,7 @@ void searchEngine::searchExactCourse(string str)
     tree.searchCourse(str);
 }
 
-void searchEngine::browseCourses(string str)
+void searchEngine::browseCourses(string str, int count = 2)
 {
     transform(str.begin(), str.end(), str.begin(), ::tolower);
     LinkedList *shortList = new LinkedList();
@@ -86,20 +86,20 @@ void searchEngine::browseCourses(string str)
         max_heap.insert(temp, temp->data.counter);
         temp = temp->next;
     }
+    
     shortList->destroy(); // Destroy unsorted list
 
     // Creates sorted list
     max_heap.returnList(shortList);
-    //shortList->printList(3);
+    shortList->printList(count);
     shortList->destroy();
 }
 
 void searchEngine::searchCategoryWise(string str)
 {
-
 }
 
-void searchEngine::splitString(string str, LinkedList * shortList)
+void searchEngine::splitString(string str, LinkedList *shortList)
 {
     char ch;
     string subString = "";
@@ -109,6 +109,7 @@ void searchEngine::splitString(string str, LinkedList * shortList)
         if (isspace(ch))
         {
             prefix_tree.search(subString, shortList);
+            //tags_Tree.search(subString, shortList);
             subString = "";
             continue;
         }
@@ -116,4 +117,5 @@ void searchEngine::splitString(string str, LinkedList * shortList)
         subString = subString + ch;
     }
     prefix_tree.search(subString, shortList);
+    //tags_Tree.search(subString, shortList);
 }
