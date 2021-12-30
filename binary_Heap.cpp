@@ -25,7 +25,7 @@ public:
     {
         index = 1;
         size = SIZE;
-        arrPtr = new q_Node[size];
+        arrPtr = new q_Node[size] ();
 
         for (size_t i = 1; i < size; i++)
             arrPtr[i].count = -9999;
@@ -41,7 +41,7 @@ public:
 void binary_Heap::increaseCapacity()
 {
     q_Node *temp = arrPtr;
-    q_Node *newArray = new q_Node[2 * size];
+    q_Node *newArray = new q_Node[2 * size] ();
 
     for (size_t i = 1; i < size; i++)
         newArray[i] = arrPtr[i];
@@ -79,7 +79,7 @@ Course *binary_Heap::getMax()
             if (arrPtr[lChild].course == NULL || arrPtr[rChild].course == NULL)
                 flag = 0;
 
-            else if (arrPtr[lChild].course->data.subscribers > arrPtr[rChild].course->data.subscribers )
+            else if (arrPtr[lChild].course->data.rating > arrPtr[rChild].course->data.rating )
                 flag = 1;
             else 
                 flag = 0;

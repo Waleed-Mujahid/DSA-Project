@@ -41,7 +41,7 @@ void LinkedList::printList(int numOfTimes, int val)
             if (val == 0)
                 temp->PrintCourseData();
             else
-                cout << temp->data.name;
+                cout << temp->data.name << endl;;
             temp = temp->next;
         }
     }

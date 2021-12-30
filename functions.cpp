@@ -109,7 +109,7 @@ void searchEngine::autoComplete(string str)
     else
         flag = autoTree.autoCompleteFunc(str, flag);
 
-    if (flag)
+    if (flag);
         browseCourses(str);
 }
 
@@ -129,6 +129,5 @@ void searchEngine::splitString(string str, LinkedList *shortList)
 
         subString = subString + ch;
     }
-    cout << subString << endl;
     prefix_tree.search(subString, shortList);
 }

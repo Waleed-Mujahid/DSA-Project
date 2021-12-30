@@ -8,10 +8,10 @@ using namespace std;
 
 int main()
 {
+    string str;
     searchEngine obj;
     obj.readData();
-    //obj.browseCourses("web development",3);
-    obj.autoComplete("web de");
-    //obj.browseCourses("web");
+    cin >> str;
+    obj.autoComplete("web f");
     return 0;
 }

@@ -32,6 +32,8 @@ public:
     {
         isUdemy = false;
         counter = 0;
+        rating = 0;
+        subscribers = 0;
     }
 };
 

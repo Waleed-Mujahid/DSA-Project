@@ -143,7 +143,7 @@ int Trie::recursiveAutoCmp(string str, trei_Node *current, int val)
         {
             LinkedList *list = new LinkedList();
             current->priority_Q.returnList(list);
-            list->printList(2, 1);
+            list->printList(3, 1);
             if (list->isEmpty())
                 return 1;
         }
@@ -163,6 +163,7 @@ int Trie::recursiveAutoCmp(string str, trei_Node *current, int val)
             recursiveAutoCmp(str, &current->arrayPtr[i], val);
         }
     }
+    return 0;
 }
 
 void Trie::readAvl(Course *obj, int val = 0)
@@ -204,7 +205,6 @@ void Trie::splitString(string str, Course *obj)
 
 void Trie::splitStringTwo(string str, Course *obj)
 {
-
     int flag = -1;
     char ch;
     string subString = "";
@@ -217,6 +217,9 @@ void Trie::splitStringTwo(string str, Course *obj)
             continue;
         }
 
+        if (flag == 1)
+            break;
+            
         subString = subString + ch;
     }
     insert(subString, obj);
