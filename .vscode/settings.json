@@ -11,6 +11,8 @@
         "xlocale": "cpp",
         "xutility": "cpp",
         "chrono": "cpp",
-        "string": "cpp"
+        "string": "cpp",
+        "tuple": "cpp",
+        "utility": "cpp"
     }
 }

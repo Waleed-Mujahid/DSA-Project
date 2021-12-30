@@ -10,6 +10,6 @@ int main()
 {
     searchEngine obj;
     obj.readData();
-    obj.browseCourses("the web",10);
+    obj.autoComplete("ar");
     return 0;
 }

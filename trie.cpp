@@ -24,8 +24,10 @@ class Trie
 {
 public:
     trei_Node *root;
+    string autocomplete;
     Trie()
     {
+        autocomplete = "";
         root = new trei_Node();
         root->arrayPtr = new trei_Node[26];
     }
@@ -36,26 +38,40 @@ public:
     void splitString(string, Course *);
     void create_Tags_Tree(Course *);
     int check(string);
+    void autoCompleteFunc(string);
+    bool isLastNode(trei_Node *);
+    void recursiveAutoCmp(string, trei_Node *);
 };
+
+bool Trie::isLastNode(trei_Node *root)
+{
+    for (int i = 0; i < 26; i++)
+        if (root->arrayPtr[i].c != '\0')
+            return 0;
+    return 1;
+}
+
 
 int Trie::check(string str)
 {
     int flag = 1;
-    string array[5] = {"the", "for","in", "and" , "at"};
+    string array[5] = {"the", "for", "in", "and", "at"};
     for (size_t i = 0; i < 5; i++)
     {
         if (array[i] == str)
         {
-            flag = 0;break;
+            flag = 0;
+            break;
         }
     }
-    
+
     return flag;
 }
 
 void Trie::insert(string str, Course *obj)
 {
     trei_Node *current = root;
+
     for (size_t i = 0; i < str.length(); i++)
     {
         char ch = str[i];
@@ -74,9 +90,10 @@ void Trie::insert(string str, Course *obj)
             current = &current->arrayPtr[index];
     }
     current->isWord = true;
-    
     if (check(str))
+    {
         current->priority_Q.insert(obj, obj->data.rating);
+    }
 }
 
 bool Trie::search(string str, LinkedList *obj)
@@ -99,8 +116,44 @@ bool Trie::search(string str, LinkedList *obj)
         current->priority_Q.returnList(obj);
         return true;
     }
-
     return false;
+}
+
+// introd
+void Trie::autoCompleteFunc(string str)
+{
+    int index;
+    trei_Node *current = root;
+    for (size_t i = 0; i < str.length(); i++)
+    {
+        if (isspace(str[i]))
+            continue;
+
+        index = str[i] - 'a';
+        if (current->arrayPtr[index].c == '\0')
+            return;
+        current = &current->arrayPtr[index];
+    }
+    recursiveAutoCmp(str, current);
+}
+
+void Trie::recursiveAutoCmp(string str, trei_Node *current)
+{
+    if (isLastNode(current))
+    {
+        cout << str + autocomplete << endl;
+        autocomplete = "";
+        return;
+    }
+
+    for (size_t i = 0; i < 26; i++)
+    {
+        if (current->arrayPtr[i].c != '\0')
+        {
+            autocomplete = autocomplete + current->arrayPtr[i].c;
+            recursiveAutoCmp(str, &current->arrayPtr[i]);
+        }
+    }
 }
 
 void Trie::create_Tags_Tree(Course *obj)

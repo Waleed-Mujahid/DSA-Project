@@ -24,7 +24,7 @@ public:
     void readData();
     void searchExactCourse(string);
     void browseCourses(string, int);
-    void searchCategoryWise(string);
+    void autoComplete(string);
     void printCourses_A_Z();
     void searchFreeCourses();
 };
@@ -95,15 +95,12 @@ void searchEngine::browseCourses(string str, int count = 2)
     shortList->destroy();
 }
 
-<<<<<<< HEAD
-void searchEngine::searchCategoryWise(string str)
+void searchEngine::autoComplete(string str)
 {
+    prefix_tree.autoCompleteFunc(str);
 }
 
-void searchEngine::splitString(string str, LinkedList *shortList)
-=======
 void searchEngine::splitString(string str, LinkedList * shortList)
->>>>>>> ed8cef12d5f19343642f2571b3c62ec55ca95f3f
 {
     char ch;
     string subString = "";
