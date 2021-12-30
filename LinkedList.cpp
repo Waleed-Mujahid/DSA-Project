@@ -16,7 +16,7 @@ bool LinkedList::isEmpty()
 {
     return first == NULL;
 }
-void LinkedList::printList(int numOfTimes)
+void LinkedList::printList(int numOfTimes, int val)
 {
     int x = 0;
     Course *temp = first;
@@ -27,15 +27,21 @@ void LinkedList::printList(int numOfTimes)
     {
         while (temp->next != NULL)
         {
-            temp->PrintCourseData();
+            if (val == 0)
+                temp->PrintCourseData();
+            else
+                cout << temp->data.name << endl;
             temp = temp->next;
         }
     }
     else
     {
         for (size_t i = 0; i < numOfTimes && temp != NULL; i++)
-        {             
-            temp->PrintCourseData();
+        {
+            if (val == 0)
+                temp->PrintCourseData();
+            else
+                cout << temp->data.name;
             temp = temp->next;
         }
     }

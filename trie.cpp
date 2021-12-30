@@ -34,13 +34,13 @@ public:
 
     void insert(string, Course *);
     bool search(string, LinkedList *);
-    void readAvl(Course *);
+    void readAvl(Course *, int);
     void splitString(string, Course *);
-    void create_Tags_Tree(Course *);
+    void splitStringTwo(string, Course *);
     int check(string);
-    void autoCompleteFunc(string);
+    int autoCompleteFunc(string, int);
     bool isLastNode(trei_Node *);
-    void recursiveAutoCmp(string, trei_Node *);
+    int recursiveAutoCmp(string, trei_Node *, int);
 };
 
 bool Trie::isLastNode(trei_Node *root)
@@ -50,7 +50,6 @@ bool Trie::isLastNode(trei_Node *root)
             return 0;
     return 1;
 }
-
 
 int Trie::check(string str)
 {
@@ -119,8 +118,7 @@ bool Trie::search(string str, LinkedList *obj)
     return false;
 }
 
-// introd
-void Trie::autoCompleteFunc(string str)
+int Trie::autoCompleteFunc(string str, int val)
 {
     int index;
     trei_Node *current = root;
@@ -131,19 +129,30 @@ void Trie::autoCompleteFunc(string str)
 
         index = str[i] - 'a';
         if (current->arrayPtr[index].c == '\0')
-            return;
+            return 1;
         current = &current->arrayPtr[index];
     }
-    recursiveAutoCmp(str, current);
+    return recursiveAutoCmp(str, current, val);
 }
 
-void Trie::recursiveAutoCmp(string str, trei_Node *current)
+int Trie::recursiveAutoCmp(string str, trei_Node *current, int val)
 {
     if (isLastNode(current))
     {
-        cout << str + autocomplete << endl;
-        autocomplete = "";
-        return;
+        if (val == 0)
+        {
+            LinkedList *list = new LinkedList();
+            current->priority_Q.returnList(list);
+            list->printList(2, 1);
+            if (list->isEmpty())
+                return 1;
+        }
+        else
+        {
+            cout << str + autocomplete << endl;
+            autocomplete = "";
+        }
+        return 0;
     }
 
     for (size_t i = 0; i < 26; i++)
@@ -151,30 +160,12 @@ void Trie::recursiveAutoCmp(string str, trei_Node *current)
         if (current->arrayPtr[i].c != '\0')
         {
             autocomplete = autocomplete + current->arrayPtr[i].c;
-            recursiveAutoCmp(str, &current->arrayPtr[i]);
+            recursiveAutoCmp(str, &current->arrayPtr[i], val);
         }
     }
 }
 
-void Trie::create_Tags_Tree(Course *obj)
-{
-    if (obj == NULL)
-    {
-        //Base Case
-        return;
-    }
-
-    create_Tags_Tree(obj->LeftChild);
-    create_Tags_Tree(obj->RightChild);
-
-    if (obj->data.isUdemy == 0)
-    {
-        splitString(obj->data.tags[0], obj);
-        splitString(obj->data.tags[1], obj);
-    }
-}
-
-void Trie::readAvl(Course *obj)
+void Trie::readAvl(Course *obj, int val = 0)
 {
 
     if (obj == NULL)
@@ -183,15 +174,13 @@ void Trie::readAvl(Course *obj)
         return;
     }
 
-    splitString(obj->data.name, obj);
-    if (obj->data.isUdemy == 0)
-    {
-        //splitString(obj->data.tags[0], obj);
-        //splitString(obj->data.tags[1], obj);
-    }
+    if (val == 0)
+        splitString(obj->data.name, obj);
+    else
+        splitStringTwo(obj->data.name, obj);
 
-    readAvl(obj->LeftChild);
-    readAvl(obj->RightChild);
+    readAvl(obj->LeftChild, val);
+    readAvl(obj->RightChild, val);
 }
 
 void Trie::splitString(string str, Course *obj)
@@ -211,4 +200,24 @@ void Trie::splitString(string str, Course *obj)
 
         subString = subString + ch;
     }
+}
+
+void Trie::splitStringTwo(string str, Course *obj)
+{
+
+    int flag = -1;
+    char ch;
+    string subString = "";
+    for (size_t i = 0; i < str.length(); i++)
+    {
+        ch = str[i];
+        if (isspace(ch))
+        {
+            flag++;
+            continue;
+        }
+
+        subString = subString + ch;
+    }
+    insert(subString, obj);
 }

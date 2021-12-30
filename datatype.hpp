@@ -87,16 +87,24 @@ public:
     }
     void InsertUserCourseData() //function to insert the data into the course
     {
+        cout << "Enter course name: " ;
         std::cin >> data.name;
+        cout << "Attach course link: ";
         std::cin >> data.url;
+        cout << "Give category id: ";
         std::cin >> data.Category_id;
+        cout << "Give course price: ";
         std::cin >> data.price;
+        cout << "Give number of subscribers: ";
         std::cin >> data.subscribers;
-        std::cin >> data.course_id;
+        cout << "Year of release = ";
         std::cin >> data.publish_year;
+        cout << "Hours to complete = ";
         std::cin >> data.duration;
         if (data.price != 0)
             data.isPaid == false;
+
+        
     }
 };
 
@@ -110,7 +118,7 @@ public:
     Course *loc;
     LinkedList();
     bool isEmpty();
-    void printList(int);
+    void printList(int, int);
     void SearchList(string); //searches through list linearly
     void insertFront();
     void insertFront(Course *);

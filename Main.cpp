@@ -10,6 +10,8 @@ int main()
 {
     searchEngine obj;
     obj.readData();
-    obj.autoComplete("ar");
+    //obj.browseCourses("web development",3);
+    obj.autoComplete("web de");
+    //obj.browseCourses("web");
     return 0;
 }

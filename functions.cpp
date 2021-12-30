@@ -10,8 +10,7 @@
 class searchEngine
 {
     AVL_Tree tree;
-    Trie prefix_tree, tags_Tree;
-    stack *st = new stack();
+    Trie prefix_tree, autoTree;
     LinkedList list;
     binary_Heap max_heap;
     void traverseAVL(int, Course *);
@@ -26,7 +25,7 @@ public:
     void browseCourses(string, int);
     void autoComplete(string);
     void printCourses_A_Z();
-    void searchFreeCourses();
+    void searchFreeCourses(int);
 };
 
 void searchEngine::traverseAVL(int parameter, Course *temp)
@@ -37,18 +36,18 @@ void searchEngine::traverseAVL(int parameter, Course *temp)
     traverseAVL(parameter, temp->LeftChild);
     traverseAVL(parameter, temp->RightChild);
 
-    if (temp->data.price == 0 && temp->data.isUdemy)
-        max_heap.insert(temp, temp->data.subscribers);
+    if (temp->data.price == 0)
+        max_heap.insert(temp, temp->data.rating);
 }
 
-void searchEngine::searchFreeCourses()
+void searchEngine::searchFreeCourses(int count = 0)
 {
     // Return free courses Max_heap wrt popularity
     traverseAVL(0, tree.root);
     LinkedList *shortList = new LinkedList();
     // Creates sorted list
     max_heap.returnList(shortList);
-    shortList->printList(3);
+    shortList->printList(count,0);
     shortList->destroy();
 }
 
@@ -62,7 +61,7 @@ void searchEngine::readData()
     tree.insertUdemyDataset();
     tree.insertCourseraDataset();
     prefix_tree.readAvl(tree.root);
-    //tags_Tree.create_Tags_Tree(tree.root);
+    autoTree.readAvl(tree.root, 1);
     list.insertFile("udemy_courses.csv");
 }
 
@@ -86,21 +85,35 @@ void searchEngine::browseCourses(string str, int count = 2)
         max_heap.insert(temp, temp->data.counter);
         temp = temp->next;
     }
-    
+
     shortList->destroy(); // Destroy unsorted list
 
     // Creates sorted list
     max_heap.returnList(shortList);
-    shortList->printList(count);
+    shortList->printList(count,0);
     shortList->destroy();
 }
 
 void searchEngine::autoComplete(string str)
 {
-    prefix_tree.autoCompleteFunc(str);
+    cout << "Possible suggestions: " << endl;
+    int flag = 1;
+    for (size_t i = 0; i < str.length(); i++)
+    {
+        if (isspace( str[i] ))
+            flag = 0;
+    }
+    
+    if (flag)
+        prefix_tree.autoCompleteFunc(str, flag);
+    else
+        flag = autoTree.autoCompleteFunc(str, flag);
+
+    if (flag)
+        browseCourses(str);
 }
 
-void searchEngine::splitString(string str, LinkedList * shortList)
+void searchEngine::splitString(string str, LinkedList *shortList)
 {
     char ch;
     string subString = "";
@@ -110,14 +123,12 @@ void searchEngine::splitString(string str, LinkedList * shortList)
         if (isspace(ch))
         {
             prefix_tree.search(subString, shortList);
-            //tags_Tree.search(subString, shortList);
             subString = "";
             continue;
         }
 
         subString = subString + ch;
     }
+    cout << subString << endl;
     prefix_tree.search(subString, shortList);
-    //tags_Tree.search(subString, shortList);
 }
-
