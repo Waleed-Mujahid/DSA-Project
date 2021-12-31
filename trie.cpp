@@ -91,7 +91,7 @@ void Trie::insert(string str, Course *obj)
             current = &current->arrayPtr[index];
     }
     if (check(str))
-        current->priority_Q.insert_without_duplication( obj->data.rating, obj);
+        current->priority_Q.insert(obj, obj->data.rating);
 
     current->isWord = true;
 }
@@ -113,7 +113,7 @@ bool Trie::search(string str, LinkedList *obj)
     }
     if (current->isWord == true)
     {
-        //current->priority_Q.returnList(obj);
+        current->priority_Q.returnList(obj);
         return true;
     }
     return false;
@@ -143,7 +143,7 @@ int Trie::recursiveAutoCmp(string str, trei_Node *current, int val)
         if (val == 0)
         {
             LinkedList *list = new LinkedList();
-            //current->priority_Q.returnList(list);
+            current->priority_Q.returnList(list);
             list->printList(3, 1);
             puts("");
             if (list->isEmpty())

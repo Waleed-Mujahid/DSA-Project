@@ -39,7 +39,7 @@ void searchEngine::traverseAVL(int parameter, Course *temp)
     traverseAVL(parameter, temp->RightChild);
 
     if (temp->data.price == 0) // Inserts course only if it is free
-        max_heap.insert_without_duplication(temp->data.rating,temp);
+        max_heap.insert(temp, temp->data.rating);
 }
 
 void searchEngine::searchFreeCourses(int count = 0)
@@ -85,7 +85,7 @@ void searchEngine::browseCourses(string str, int count = 2, int val = 0)
     Course *temp = shortList->first;
     while (temp != NULL)
     {
-        max_heap.insert_without_duplication(temp->data.counter,temp);
+        max_heap.insert(temp, temp->data.counter);
         temp = temp->next;
     }
 

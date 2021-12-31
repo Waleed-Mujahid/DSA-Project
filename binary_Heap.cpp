@@ -1,4 +1,4 @@
-/*#pragma once
+#pragma once
 #include <iostream>
 #include <algorithm>
 #include <fstream>
@@ -148,4 +148,4 @@ void binary_Heap::insert(Course *obj, int parameter)
         child = parent;
         parent = child / 2;
     } while (parent >= 1);
-}   */
+}   
