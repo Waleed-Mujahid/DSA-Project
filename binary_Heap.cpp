@@ -1,4 +1,4 @@
-#pragma once
+/*#pragma once
 #include <iostream>
 #include <algorithm>
 #include <fstream>
@@ -79,7 +79,7 @@ Course *binary_Heap::getMax()
             if (arrPtr[lChild].course == NULL || arrPtr[rChild].course == NULL)
                 flag = 0;
 
-            else if (arrPtr[lChild].course->data.rating > arrPtr[rChild].course->data.rating )
+            else if (arrPtr[lChild].course->data.subscribers > arrPtr[rChild].course->data.subscribers)
                 flag = 1;
             else 
                 flag = 0;
@@ -123,7 +123,6 @@ void binary_Heap::returnList(LinkedList *obj)
         }
         temp = getMax();
     }
-    puts("");
 }
 
 bool binary_Heap::isEmpty()
@@ -149,4 +148,4 @@ void binary_Heap::insert(Course *obj, int parameter)
         child = parent;
         parent = child / 2;
     } while (parent >= 1);
-}   
+}   */

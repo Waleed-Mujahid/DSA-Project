@@ -2,7 +2,8 @@
 #include <iostream>
 #include "avl_tree.cpp"
 #include "datatype.hpp"
-#include "binary_Heap.cpp"
+//#include "binary_Heap.cpp"
+#include "tempFile.cpp"
 
 using namespace std;
 
@@ -11,27 +12,27 @@ class trei_Node
 public:
     char c;
     bool isWord;
-    binary_Heap priority_Q;
     trei_Node *arrayPtr;
+    Heap priority_Q;
     trei_Node()
     {
         c = '\0';
         isWord = false;
+        arrayPtr = NULL;
     }
 };
 
 class Trie
 {
-public:
     trei_Node *root;
     string autocomplete;
+public:
     Trie()
     {
         autocomplete = "";
         root = new trei_Node();
         root->arrayPtr = new trei_Node[26];
     }
-
     void insert(string, Course *);
     bool search(string, LinkedList *);
     void readAvl(Course *, int);
@@ -48,6 +49,7 @@ bool Trie::isLastNode(trei_Node *root)
     for (int i = 0; i < 26; i++)
         if (root->arrayPtr[i].c != '\0')
             return 0;
+
     return 1;
 }
 
@@ -88,11 +90,10 @@ void Trie::insert(string str, Course *obj)
         else
             current = &current->arrayPtr[index];
     }
-    current->isWord = true;
     if (check(str))
-    {
-        current->priority_Q.insert(obj, obj->data.rating);
-    }
+        current->priority_Q.insert_without_duplication( obj->data.rating, obj);
+
+    current->isWord = true;
 }
 
 bool Trie::search(string str, LinkedList *obj)
@@ -112,7 +113,7 @@ bool Trie::search(string str, LinkedList *obj)
     }
     if (current->isWord == true)
     {
-        current->priority_Q.returnList(obj);
+        //current->priority_Q.returnList(obj);
         return true;
     }
     return false;
@@ -142,10 +143,11 @@ int Trie::recursiveAutoCmp(string str, trei_Node *current, int val)
         if (val == 0)
         {
             LinkedList *list = new LinkedList();
-            current->priority_Q.returnList(list);
+            //current->priority_Q.returnList(list);
             list->printList(3, 1);
+            puts("");
             if (list->isEmpty())
-                return 1;
+                return 0;
         }
         else
         {
@@ -219,7 +221,7 @@ void Trie::splitStringTwo(string str, Course *obj)
 
         if (flag == 1)
             break;
-            
+
         subString = subString + ch;
     }
     insert(subString, obj);
