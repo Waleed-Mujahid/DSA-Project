@@ -20,12 +20,12 @@ public:
         if (dict.find(ins) == dict.end())
         {
             cout << "Creating a new key value pair" << endl;
-            *sz++;//size incremented
-            Course **rootsN = new Course *[*sz];//new hash table of size+1
-            CopyFunc(roots, rootsN, *sz - 1);//function that copies size-1 elements to hash table
-            dict.insert({ins, rootsN[*sz]->data.Category_id});//inserts new key value pair
-            Course **roots = new Course *[*sz];//reinitializes current root table
-            CopyFunc(roots, rootsN, *sz);//copies content from new table to older one
+            *sz++;                                             //size incremented
+            Course **rootsN = new Course *[*sz];               //new hash table of size+1
+            CopyFunc(roots, rootsN, *sz - 1);                  //function that copies size-1 elements to hash table
+            dict.insert({ins, rootsN[*sz]->data.Category_id}); //inserts new key value pair
+            Course **roots = new Course *[*sz];                //reinitializes current root table
+            CopyFunc(roots, rootsN, *sz);                      //copies content from new table to older one
         }
         else
         {
@@ -38,16 +38,21 @@ class Hash_map
 {
 public:
     Dictionary d1;
-    int size = 4;                     //used in case more categories are added to the heap(to increase size)
-    Course **roots = new Course *[4]; //current data set only has 4 categories so it is initialized at that
-    Course *sub_root;  
-    void HashFromFIle()
+    int size = 0;                     //used in case more categories are added to the heap(to increase size)
+    Course **roots = new Course *[0]; //current data set only has 4 categories so it is initialized at that
+    Course *sub_root;
+    void HashFromFIle() //inserts category ids from file.
     {
-        
-    }               //sub roots are pointers pointing to the heaps that will be found in each category
-    void HashFunc(string s)           //Hash function which will use dictionaries
+        //Waleed, do your thing
+    }                       //sub roots are pointers pointing to the heaps that will be found in each category
+    void HashFunc(string s) //Hash function which will use dictionaries
     {
-
+        std::cout << "Hashing user input" << endl;
+        if (d1.dict.find(s) != d1.dict.end())
+        {
+            int pos = distance(d1.dict.begin(), d1.dict.find(s));
+            *roots[pos]; //points to first value of heap, tho we don't have heap data type yet
+        }
     }
     void deleteHash();        //deletes a particular hash value, resulting in the deletion of the entire heap belonging to that category
     void inserthash(string s) //to be used when adding new hash maps;

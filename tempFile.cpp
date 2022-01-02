@@ -1,6 +1,6 @@
 #pragma once
 #include <iostream>
-#include "queue.h"
+#include "queue.hpp"
 #include "datatype.hpp"
 using namespace std;
 
