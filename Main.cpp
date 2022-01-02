@@ -12,18 +12,7 @@ int main()
 {
     searchEngine obj;
     obj.readData();
-    int i = 0;
-    char c;
-    char str[100];
-    cout << "Please search for your course:" << endl;
-    do
-    {
-        c = getchar();
-        str[i] = c;
-        i++;
-    } while (c != '\n');
-
-    obj.autoComplete(str);
+    obj.browseCourses("web");
     return 0;
 }
 

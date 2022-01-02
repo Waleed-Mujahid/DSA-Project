@@ -32,7 +32,7 @@ public:
     }
     bool isEmpty();
     bool isFull();
-    void insert(Course *, int);
+    void insert(Course *, float);
     void returnList(LinkedList *);
     Course *getMax();
     void increaseCapacity();
@@ -130,7 +130,7 @@ bool binary_Heap::isEmpty()
     return index == 0;
 }
 
-void binary_Heap::insert(Course *obj, int parameter)
+void binary_Heap::insert(Course *obj, float parameter)
 {
     if (isFull())
         increaseCapacity();

@@ -8,19 +8,18 @@ class Heap
 {
 
 public:
-	Heap_Node* root;
-	Heap_Node* loc;
-	Heap_Node* ploc;
+	Heap_Node *root;
+	Heap_Node *loc;
+	Heap_Node *ploc;
 	Heap()
 	{
 		root = NULL;
-
 	}
-	Heap_Node* last_parent()
+	Heap_Node *last_parent()
 	{
-		Queue  q;
+		Queue q;
 		q.push(root);
-		Heap_Node* temp = q.front();
+		Heap_Node *temp = q.front();
 		while (!q.is_empty())
 		{
 			temp = q.front();
@@ -35,7 +34,7 @@ public:
 		}
 		return temp;
 	}
-	int real_duplication_check(int value, Heap_Node* loc)
+	int real_duplication_check(int value, Heap_Node *loc)
 	{
 		if (loc == NULL)
 			return 0;
@@ -54,7 +53,7 @@ public:
 		return root == NULL;
 	};
 
-	void heapify(Heap_Node* temp)
+	void heapify(Heap_Node *temp)
 	{
 		if (temp->Parent == NULL)
 		{
@@ -70,10 +69,9 @@ public:
 				if (temp == root->LeftChild)
 				{
 
-					Heap_Node* temp1 = temp->Parent;
+					Heap_Node *temp1 = temp->Parent;
 
-
-					Heap_Node* rchild = NULL;
+					Heap_Node *rchild = NULL;
 					if (temp1->RightChild != NULL)
 					{
 						rchild = temp1->RightChild;
@@ -92,12 +90,11 @@ public:
 					if (temp1->RightChild != NULL)
 						temp1->RightChild->Parent = temp1;
 					root->Parent = NULL;
-
 				}
 				else if (temp == root->RightChild)
 				{
-					Heap_Node* temp1 = temp->Parent;
-					Heap_Node* lchild = temp1->LeftChild;
+					Heap_Node *temp1 = temp->Parent;
+					Heap_Node *lchild = temp1->LeftChild;
 					if (temp->LeftChild != NULL)
 						temp1->LeftChild = temp->LeftChild;
 					else
@@ -117,9 +114,7 @@ public:
 					if (temp1->RightChild != NULL)
 						temp1->RightChild->Parent = temp1;
 					root->Parent = NULL;
-
 				}
-
 			}
 
 			else if (temp->Parent->LeftChild == temp)
@@ -128,12 +123,12 @@ public:
 				if (temp->Parent->Parent->LeftChild == temp->Parent)
 				{
 
-					Heap_Node* temp1 = temp->Parent->Parent;
-					Heap_Node* temp2 = temp->Parent;
-					Heap_Node* lchild = NULL;
+					Heap_Node *temp1 = temp->Parent->Parent;
+					Heap_Node *temp2 = temp->Parent;
+					Heap_Node *lchild = NULL;
 					if (temp->LeftChild != NULL)
 						lchild = temp->LeftChild;
-					Heap_Node* rchild = NULL;
+					Heap_Node *rchild = NULL;
 					if (temp->RightChild != NULL)
 						rchild = temp->RightChild;
 
@@ -156,13 +151,12 @@ public:
 				else if (temp->Parent->Parent->RightChild == temp->Parent)
 				{
 
-
-					Heap_Node* temp1 = temp->Parent->Parent;
-					Heap_Node* temp2 = temp->Parent;
-					Heap_Node* lchild = NULL;
+					Heap_Node *temp1 = temp->Parent->Parent;
+					Heap_Node *temp2 = temp->Parent;
+					Heap_Node *lchild = NULL;
 					if (temp->LeftChild != NULL)
 						lchild = temp->LeftChild;
-					Heap_Node* rchild = NULL;
+					Heap_Node *rchild = NULL;
 					if (temp->RightChild != NULL)
 						rchild = temp->RightChild;
 
@@ -187,16 +181,15 @@ public:
 			{
 				if (temp->Parent->Parent->LeftChild == temp->Parent)
 				{
-					Heap_Node* temp1 = temp->Parent->Parent;
-					Heap_Node* temp2 = temp->Parent;
+					Heap_Node *temp1 = temp->Parent->Parent;
+					Heap_Node *temp2 = temp->Parent;
 
-					Heap_Node* lchild = NULL;
+					Heap_Node *lchild = NULL;
 					if (temp->LeftChild != NULL)
 						lchild = temp->LeftChild;
-					Heap_Node* rchild = NULL;
+					Heap_Node *rchild = NULL;
 					if (temp->RightChild != NULL)
 						rchild = temp->RightChild;
-
 
 					temp->RightChild = temp->Parent;
 					temp->LeftChild = temp->Parent->LeftChild;
@@ -218,12 +211,12 @@ public:
 				else if (temp->Parent->Parent->RightChild == temp->Parent)
 				{
 
-					Heap_Node* temp1 = temp->Parent->Parent;
-					Heap_Node* temp2 = temp->Parent;
-					Heap_Node* lchild = NULL;
+					Heap_Node *temp1 = temp->Parent->Parent;
+					Heap_Node *temp2 = temp->Parent;
+					Heap_Node *lchild = NULL;
 					if (temp->LeftChild != NULL)
 						lchild = temp->LeftChild;
-					Heap_Node* rchild = NULL;
+					Heap_Node *rchild = NULL;
 					if (temp->RightChild != NULL)
 						rchild = temp->RightChild;
 
@@ -249,21 +242,19 @@ public:
 			return;
 		root->Parent = NULL;
 
-
-
 		heapify(temp);
 	}
 
-	void insert(Course* obj, int value)
+	void insert(Course *obj, float value)
 	{
-		Heap_Node* newnode = new Heap_Node(value);
-        newnode->node = obj;
+		Heap_Node *newnode = new Heap_Node(value);
+		newnode->node = obj;
 		if (is_empty())
 		{
 			root = newnode;
 			return;
 		}
-		Heap_Node* new_parent = last_parent();
+		Heap_Node *new_parent = last_parent();
 		if (new_parent->LeftChild == NULL)
 		{
 			new_parent->LeftChild = newnode;
@@ -275,9 +266,8 @@ public:
 			newnode->Parent = new_parent;
 		}
 		heapify(newnode);
-
 	}
-	void inorder(Heap_Node* loc)
+	void inorder(Heap_Node *loc)
 	{
 		if (loc != NULL)
 		{
@@ -286,11 +276,11 @@ public:
 			inorder(loc->RightChild);
 		}
 	}
-	Heap_Node* last_node()
+	Heap_Node *last_node()
 	{
 		Queue q;
 		q.push(root);
-		Heap_Node* temp = q.front();
+		Heap_Node *temp = q.front();
 		while (!q.is_empty())
 		{
 			temp = q.front();
@@ -307,10 +297,10 @@ public:
 		return temp;
 	}
 
-	void downheapify(Heap_Node* temp)
+	void downheapify(Heap_Node *temp)
 	{
 		root->Parent = NULL;
-		Heap_Node* largest = temp;
+		Heap_Node *largest = temp;
 		if (temp->LeftChild != NULL && temp->LeftChild->data > largest->data)
 		{
 			largest = temp->LeftChild;
@@ -328,8 +318,8 @@ public:
 			{
 				if (temp == root)
 				{
-					Heap_Node* lchild = NULL;
-					Heap_Node* rchild = NULL;
+					Heap_Node *lchild = NULL;
+					Heap_Node *rchild = NULL;
 					if (largest->RightChild != NULL)
 						rchild = largest->RightChild;
 					if (largest->LeftChild != NULL)
@@ -342,7 +332,6 @@ public:
 					root = largest;
 					root->Parent = NULL;
 
-
 					if (temp->LeftChild != NULL)
 						temp->LeftChild->Parent = temp;
 					if (temp->RightChild != NULL)
@@ -350,15 +339,14 @@ public:
 					if (largest->RightChild != NULL)
 						largest->RightChild->Parent = largest;
 					largest->LeftChild->Parent = largest;
-
 				}
 				else if (temp != root)
 				{
 					if (temp->Parent->LeftChild == temp)
 					{
-						Heap_Node* temp1 = temp->Parent;
-						Heap_Node* lchild = NULL;
-						Heap_Node* rchild = NULL;
+						Heap_Node *temp1 = temp->Parent;
+						Heap_Node *lchild = NULL;
+						Heap_Node *rchild = NULL;
 						if (largest->RightChild != NULL)
 							rchild = largest->RightChild;
 						if (largest->LeftChild != NULL)
@@ -382,9 +370,9 @@ public:
 
 					else if (temp->Parent->RightChild == temp)
 					{
-						Heap_Node* temp1 = temp->Parent;
-						Heap_Node* lchild = NULL;
-						Heap_Node* rchild = NULL;
+						Heap_Node *temp1 = temp->Parent;
+						Heap_Node *lchild = NULL;
+						Heap_Node *rchild = NULL;
 						if (largest->RightChild != NULL)
 							rchild = largest->RightChild;
 						if (largest->LeftChild != NULL)
@@ -404,7 +392,6 @@ public:
 						if (temp->RightChild != NULL)
 							temp->RightChild->Parent = temp;
 						temp1->RightChild->Parent = temp1;
-
 					}
 				}
 			}
@@ -412,8 +399,8 @@ public:
 			{
 				if (temp == root)
 				{
-					Heap_Node* lchild = NULL;
-					Heap_Node* rchild = NULL;
+					Heap_Node *lchild = NULL;
+					Heap_Node *rchild = NULL;
 					if (largest->RightChild != NULL)
 						rchild = largest->RightChild;
 					if (largest->LeftChild != NULL)
@@ -425,7 +412,6 @@ public:
 					temp->RightChild = rchild;
 					root = largest;
 					root->Parent = NULL;
-
 
 					if (temp->LeftChild != NULL)
 						temp->LeftChild->Parent = temp;
@@ -439,9 +425,9 @@ public:
 				{
 					if (temp->Parent->LeftChild == temp)
 					{
-						Heap_Node* temp1 = temp->Parent;
-						Heap_Node* lchild = NULL;
-						Heap_Node* rchild = NULL;
+						Heap_Node *temp1 = temp->Parent;
+						Heap_Node *lchild = NULL;
+						Heap_Node *rchild = NULL;
 						if (largest->RightChild != NULL)
 							rchild = largest->RightChild;
 						if (largest->LeftChild != NULL)
@@ -465,9 +451,9 @@ public:
 
 					else if (temp->Parent->RightChild == temp)
 					{
-						Heap_Node* temp1 = temp->Parent;
-						Heap_Node* lchild = NULL;
-						Heap_Node* rchild = NULL;
+						Heap_Node *temp1 = temp->Parent;
+						Heap_Node *lchild = NULL;
+						Heap_Node *rchild = NULL;
 						if (largest->RightChild != NULL)
 							rchild = largest->RightChild;
 						if (largest->LeftChild != NULL)
@@ -490,20 +476,20 @@ public:
 					}
 				}
 			}
-
 		}
-		else return;
+		else
+			return;
 		downheapify(temp);
 	}
 
-	Course* get_max()
+	Course *get_max()
 	{
 		if (is_empty())
 		{
 			cout << "Heap is empty\n";
 			return NULL;
 		}
-		Course* result = root->node;
+		Course *result = root->node;
 		if (root->RightChild == NULL && root->LeftChild == NULL)
 		{
 			delete root;
@@ -511,10 +497,10 @@ public:
 			return result;
 		}
 
-		Heap_Node* last = last_node();
+		Heap_Node *last = last_node();
 		if (last == root->RightChild)
 		{
-			Heap_Node* tempo1 = root->RightChild;
+			Heap_Node *tempo1 = root->RightChild;
 			tempo1->LeftChild = root->LeftChild;
 			delete root;
 			root = tempo1;
@@ -525,7 +511,7 @@ public:
 		}
 		if (last == root->LeftChild)
 		{
-			Heap_Node* tempo1 = root;
+			Heap_Node *tempo1 = root;
 			root = root->LeftChild;
 			delete tempo1;
 			root->Parent = NULL;
@@ -534,7 +520,7 @@ public:
 		// swapping last and root node and deleting the root node
 		if (last->Parent->LeftChild == last)
 		{
-			Heap_Node* temp1 = root;
+			Heap_Node *temp1 = root;
 			last->LeftChild = root->LeftChild;
 			last->RightChild = root->RightChild;
 			last->Parent->LeftChild = NULL;
@@ -550,7 +536,7 @@ public:
 		}
 		else if (last->Parent->RightChild == last)
 		{
-			Heap_Node* temp1 = root;
+			Heap_Node *temp1 = root;
 			last->LeftChild = root->LeftChild;
 			last->RightChild = root->RightChild;
 			last->Parent->RightChild = NULL;
@@ -564,24 +550,22 @@ public:
 			}
 			delete temp1;
 		}
-		Heap_Node* temp = root;
+		Heap_Node *temp = root;
 		downheapify(temp);
 
 		return result;
-
 	}
 
-    void returnList(LinkedList *obj)
-{
-    Course *temp = get_max();
-    while(!is_empty())
-    {
-        if (temp != NULL)
-        {
-            obj->insert(temp);
-        }
-        temp = get_max();
-    }
-}
-
+	void returnList(LinkedList *obj)
+	{
+		Course *temp = get_max();
+		while (!is_empty())
+		{
+			if (temp != NULL)
+			{
+				obj->insert(temp);
+			}
+			temp = get_max();
+		}
+	}
 };

@@ -2,7 +2,7 @@
 #include <iostream>
 #include "avl_tree.cpp"
 #include "datatype.hpp"
-//#include "binary_Heap.cpp"
+#include "binary_Heap.cpp"
 #include "tempFile.cpp"
 
 using namespace std;
@@ -13,7 +13,7 @@ public:
     char c;
     bool isWord;
     trei_Node *arrayPtr;
-    Heap priority_Q;
+    binary_Heap priority_Q;
     trei_Node()
     {
         c = '\0';
@@ -26,6 +26,7 @@ class Trie
 {
     trei_Node *root;
     string autocomplete;
+
 public:
     Trie()
     {
@@ -145,7 +146,7 @@ int Trie::recursiveAutoCmp(string str, trei_Node *current, int val)
             LinkedList *list = new LinkedList();
             current->priority_Q.returnList(list);
             list->printList(3, 1);
-            puts("");
+            //puts("");
             if (list->isEmpty())
                 return 0;
         }
@@ -188,7 +189,14 @@ void Trie::readAvl(Course *obj, int val = 0)
 
 void Trie::splitString(string str, Course *obj)
 {
-    int flag = 0;
+    int counter = 1;
+    for (size_t i = 0; i < str.length(); i++)
+        if (isspace(str[i]))
+            counter++;
+
+    string *ptr = new string[counter];
+    int *flag = new int[counter];
+    counter = 0;
     char ch;
     string subString = "";
     for (size_t i = 0; i < str.length(); i++)
@@ -196,13 +204,22 @@ void Trie::splitString(string str, Course *obj)
         ch = str[i];
         if (isspace(ch))
         {
-            insert(subString, obj);
+            ptr[counter++] = subString;
             subString = "";
             continue;
         }
-
         subString = subString + ch;
     }
+    ptr[counter] = subString;
+
+    for (size_t i = 0; i < counter; i++)
+        for (size_t j = 0; j < counter && i != j; j++)
+            if (ptr[i].compare(ptr[j]) == 0)
+                flag[i] = 0;
+
+    for (size_t i = 0; i < counter; i++)
+        if (flag[i])
+            insert(ptr[i], obj);
 }
 
 void Trie::splitStringTwo(string str, Course *obj)

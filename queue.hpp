@@ -5,12 +5,12 @@ using namespace std;
 class Heap_Node
 {
 public:
-    int data;
+    float data;
     Course* node;
     Heap_Node* LeftChild;
     Heap_Node* RightChild;
     Heap_Node* Parent;
-    Heap_Node(int value)
+    Heap_Node(float value)
     {
         data = value;
         LeftChild = NULL;

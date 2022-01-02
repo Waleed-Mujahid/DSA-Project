@@ -12,7 +12,7 @@ class searchEngine
 {
     AVL_Tree tree;
     LinkedList list;
-    Heap max_heap;
+    binary_Heap max_heap;
     Trie prefix_tree, autoTree;
 
     void traverseAVL(int, Course *);
@@ -23,12 +23,29 @@ public:
     {
     }
     void readData();
-    void searchExactCourse(string);
+    void searchExactCourse();
     void browseCourses(string, int, int);
-    void autoComplete(string);
+    void autoComplete();
     void printCourses_A_Z();
     void searchFreeCourses(int);
+    string returnInput();
 };
+
+string searchEngine::returnInput()
+{
+    int i = 0;
+    char c;
+    char str[100];
+    cout << "Please search for your course:" << endl;
+    do
+    {
+        c = getchar();
+        str[i] = c;
+        i++;
+    } while (c != '\n');
+
+    return str;
+}
 
 void searchEngine::traverseAVL(int parameter, Course *temp)
 {
@@ -47,7 +64,7 @@ void searchEngine::searchFreeCourses(int count = 0)
     // Return free courses Max_heap wrt popularity
     traverseAVL(0, tree.root);
     LinkedList *shortList = new LinkedList();
-    
+
     // Creates sorted list
     max_heap.returnList(shortList);
     shortList->printList(count, 0);
@@ -62,14 +79,15 @@ void searchEngine::printCourses_A_Z()
 
 void searchEngine::readData()
 {
-    tree.insertUdemyDataset();         // Read data fom udemy.csv
-    tree.insertCourseraDataset();      // Read data frin Coursera.csv
-    prefix_tree.readAvl(tree.root);    // Add each word from course name to TRIE induvidually
-    autoTree.readAvl(tree.root, 1);    // TRIE used for autocomplete
+    tree.insertUdemyDataset();      // Read data fom udemy.csv
+    tree.insertCourseraDataset();   // Read data frin Coursera.csv
+    prefix_tree.readAvl(tree.root); // Add each word from course name to TRIE induvidually
+    autoTree.readAvl(tree.root, 1); // TRIE used for autocomplete
 }
 
-void searchEngine::searchExactCourse(string str)
+void searchEngine::searchExactCourse()
 {
+    string str = returnInput();
     // All courses are stored in lowercase
     transform(str.begin(), str.end(), str.begin(), ::tolower);
     tree.searchCourse(str);
@@ -96,14 +114,17 @@ void searchEngine::browseCourses(string str, int count = 2, int val = 0)
     shortList->destroy();
 }
 
-void searchEngine::autoComplete(string str)
+void searchEngine::autoComplete()
 {
-    cout << "Possible suggestions are : " << endl << endl;
-    
+    string str = returnInput();
+
+    cout << "Possible suggestions are : " << endl
+         << endl;
+
     int flag = 1;
     for (size_t i = 0; i < str.length(); i++)
     {
-        if (str[i] == '\n')   // Remove end line
+        if (str[i] == '\n') // Remove end line
         {
             str.erase(std::remove(str.begin(), str.end(), '\n'), str.end());
             break;
@@ -112,15 +133,15 @@ void searchEngine::autoComplete(string str)
             flag = 0;
     }
 
-    if (flag)   // Single word autocomplete
+    if (flag) // Single word autocomplete
     {
         prefix_tree.autoCompleteFunc(str, flag);
         flag = 0;
     }
-    else        // Multiple words autocomplete
+    else // Multiple words autocomplete
         flag = autoTree.autoCompleteFunc(str, flag);
 
-    if (flag)   // If above both returns NULL search again using other TRIE
+    if (flag) // If above both returns NULL search again using other TRIE
         browseCourses(str, 3, 1);
 }
 

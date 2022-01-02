@@ -1,3 +1,4 @@
+/*#pragma once
 #include<iostream>
 #include"datatype.hpp"
 using namespace std;
@@ -28,4 +29,4 @@ public:
     }
 
 
-};
+};*/

@@ -210,8 +210,3 @@ public:
     // Searching functions for strings
     void searchCourse(string);
 };
-
-class Heap
-{
-
-};
