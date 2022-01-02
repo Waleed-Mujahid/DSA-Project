@@ -40,7 +40,6 @@ public:
 
 void binary_Heap::increaseCapacity()
 {
-    q_Node *temp = arrPtr;
     q_Node *newArray = new q_Node[2 * size] ();
 
     for (size_t i = 1; i < size; i++)
@@ -50,8 +49,8 @@ void binary_Heap::increaseCapacity()
         newArray[i].count = -9999;
 
     size = size * 2;
+    delete[] arrPtr;
     arrPtr = newArray;
-    delete temp;
 }
 
 bool binary_Heap::isFull()
