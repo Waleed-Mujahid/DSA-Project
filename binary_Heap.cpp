@@ -12,20 +12,20 @@ class q_Node
 public:
     int count;
     Course *course;
+    q_Node* lchild;
+    q_Node* rchild;
 };
 
 class binary_Heap
 {
-private:
+public:
     q_Node *arrPtr;
     int index, lChild, rChild, parent, size;
-
-public:
     binary_Heap(int SIZE = 5)
     {
         index = 1;
         size = SIZE;
-        arrPtr = new q_Node[size] ();
+        arrPtr = new q_Node[size]();
 
         for (size_t i = 1; i < size; i++)
             arrPtr[i].count = -9999;
@@ -34,13 +34,15 @@ public:
     bool isFull();
     void insert(Course *, float);
     void returnList(LinkedList *);
+    void destroy(q_Node*);
+    void postordertraversal(q_Node*);
     Course *getMax();
     void increaseCapacity();
 };
 
 void binary_Heap::increaseCapacity()
 {
-    q_Node *newArray = new q_Node[2 * size] ();
+    q_Node *newArray = new q_Node[2 * size]();
 
     for (size_t i = 1; i < size; i++)
         newArray[i] = arrPtr[i];
@@ -80,12 +82,11 @@ Course *binary_Heap::getMax()
 
             else if (arrPtr[lChild].course->data.subscribers > arrPtr[rChild].course->data.subscribers)
                 flag = 1;
-            else 
+            else
                 flag = 0;
         }
-        else 
+        else
             flag = 0;
-
 
         if (flag)
         {
@@ -114,7 +115,7 @@ Course *binary_Heap::getMax()
 void binary_Heap::returnList(LinkedList *obj)
 {
     Course *temp = getMax();
-    while(!isEmpty())
+    while (!isEmpty())
     {
         if (temp != NULL)
         {
@@ -147,4 +148,23 @@ void binary_Heap::insert(Course *obj, float parameter)
         child = parent;
         parent = child / 2;
     } while (parent >= 1);
-}   
+}
+
+void binary_Heap::postordertraversal(q_Node *btt)//prints the elements of the tree in post order form
+	{
+		if (btt != NULL)
+		{
+			postordertraversal(btt);
+			postordertraversal(btt);
+		}
+	}
+
+void binary_Heap::destroy(q_Node* current)
+{
+    if(!isEmpty())
+    {
+        postordertraversal(current->lchild);
+        postordertraversal(current->rchild);
+        delete current;
+    }
+}
