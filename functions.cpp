@@ -36,6 +36,7 @@ public:
 void searchEngine::searchCategoryWise()
 {
     string str = returnInput();
+    cout << endl << "Following courses are from : " << str << endl;
     transform(str.begin(), str.end(), str.begin(), ::tolower);
     map.searchMap(str);
 }

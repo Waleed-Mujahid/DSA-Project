@@ -10,7 +10,7 @@ using namespace std;
 class q_Node
 {
 public:
-    int count;
+    float count;
     Course *course;
     q_Node* lchild;
     q_Node* rchild;

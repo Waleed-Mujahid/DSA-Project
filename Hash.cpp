@@ -10,11 +10,11 @@ class Hash_map
 public:
     LinkedList *l1;
     int size = 0; //used in case more categories are added to the heap(to increase size)
-    binary_Heap *hashPtr;
+    Heap *hashPtr;
     Course *sub_root;
     Hash_map()
     {
-        hashPtr = new binary_Heap[5];
+        hashPtr = new Heap[5];
     }
     int HashFunc(string str) //Hash function which will use dictionaries
     {
