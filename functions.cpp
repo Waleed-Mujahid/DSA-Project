@@ -36,6 +36,7 @@ public:
 void searchEngine::searchCategoryWise()
 {
     string str = returnInput();
+    transform(str.begin(), str.end(), str.begin(), ::tolower);
     map.searchMap(str);
 }
 
