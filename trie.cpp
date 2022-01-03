@@ -13,7 +13,7 @@ public:
     char c;
     bool isWord;
     trei_Node *arrayPtr;
-    Heap priority_Q;
+    binary_Heap priority_Q;
     trei_Node()
     {
         c = '\0';
@@ -132,6 +132,7 @@ int Trie::autoCompleteFunc(string str, int val)
         index = str[i] - 'a';
         if (current->arrayPtr[index].c == '\0')
             return 1;
+
         current = &current->arrayPtr[index];
     }
     return recursiveAutoCmp(str, current, val);
@@ -204,15 +205,18 @@ void Trie::splitString(string str, Course *obj)
         ch = str[i];
         if (isspace(ch))
         {
+            //cout << subString << endl;
+            insert(subString, obj);
             ptr[counter++] = subString;
             subString = "";
             continue;
         }
         subString = subString + ch;
     }
+    insert(subString, obj);
     ptr[counter] = subString;
 
-    for (size_t i = 0; i < counter; i++)
+    /*for (size_t i = 0; i < counter; i++)
         for (size_t j = 0; j < counter && i != j; j++)
             if (ptr[i].compare(ptr[j]) == 0)
                 flag[i] = 0;
@@ -220,6 +224,7 @@ void Trie::splitString(string str, Course *obj)
     for (size_t i = 0; i < counter; i++)
         if (flag[i])
             insert(ptr[i], obj);
+*/
 }
 
 void Trie::splitStringTwo(string str, Course *obj)

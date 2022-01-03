@@ -12,7 +12,7 @@ class searchEngine
 {
     AVL_Tree tree;
     LinkedList list;
-    Heap max_heap;
+    binary_Heap max_heap;
     Trie prefix_tree, autoTree;
     Hash_map map;
     void traverseAVL(int, Course *);
@@ -28,9 +28,8 @@ public:
     void autoComplete();
     void printCourses_A_Z();
     void searchFreeCourses(int);
-    void readAvl(Course*);
+    void readAvl(Course *);
     string returnInput();
-
 };
 
 void searchEngine::readAvl(Course *obj)
@@ -46,7 +45,6 @@ void searchEngine::readAvl(Course *obj)
     autoTree.splitStringTwo(obj->data.name, obj);
     map.HashFunc(obj->data.tags[0]);
     map.HashFunc(obj->data.tags[1]);
-
 
     readAvl(obj->LeftChild);
     readAvl(obj->RightChild);
@@ -100,9 +98,10 @@ void searchEngine::printCourses_A_Z()
 
 void searchEngine::readData()
 {
-    tree.insertUdemyDataset();      // Read data fom udemy.csv
-    tree.insertCourseraDataset();   // Read data frin Coursera.csv
-    readAvl(tree.root);              // Initialize Trie and Map with AVL tree
+    tree.insertUdemyDataset();    // Read data fom udemy.csv
+    tree.insertCourseraDataset(); // Read data frin Coursera.csv
+    readAvl(tree.root);           // Initialize Trie and Map with AVL tree
+    prefix_tree.readAvl(tree.root);
 }
 
 void searchEngine::searchExactCourse()
@@ -142,7 +141,8 @@ void searchEngine::autoComplete()
          << endl;
 
     int flag = 1;
-    for (size_t i = 0; i < str.length(); i++)
+    size_t i = 0;
+    for (; i < str.length(); i++)
     {
         if (str[i] == '\n') // Remove end line
         {
@@ -155,7 +155,7 @@ void searchEngine::autoComplete()
 
     if (flag) // Single word autocomplete
     {
-        prefix_tree.autoCompleteFunc(str, flag);
+        prefix_tree.autoCompleteFunc(str.substr(0, i), flag);
         flag = 0;
     }
     else // Multiple words autocomplete
