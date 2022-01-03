@@ -7,14 +7,14 @@
 #include <string>
 #include <algorithm>
 #include "tempFile.cpp"
-
+#include "Hash.cpp"
 class searchEngine
 {
     AVL_Tree tree;
     LinkedList list;
-    binary_Heap max_heap;
+    Heap max_heap;
     Trie prefix_tree, autoTree;
-
+    Hash_map map;
     void traverseAVL(int, Course *);
     void splitString(string, LinkedList *);
 
@@ -28,8 +28,29 @@ public:
     void autoComplete();
     void printCourses_A_Z();
     void searchFreeCourses(int);
+    void readAvl(Course*);
     string returnInput();
+
 };
+
+void searchEngine::readAvl(Course *obj)
+{
+
+    if (obj == NULL)
+    {
+        //Base Case
+        return;
+    }
+
+    //prefix_tree.splitString(obj->data.name, obj);
+    autoTree.splitStringTwo(obj->data.name, obj);
+    map.HashFunc(obj->data.tags[0]);
+    map.HashFunc(obj->data.tags[1]);
+
+
+    readAvl(obj->LeftChild);
+    readAvl(obj->RightChild);
+}
 
 string searchEngine::returnInput()
 {
@@ -81,8 +102,7 @@ void searchEngine::readData()
 {
     tree.insertUdemyDataset();      // Read data fom udemy.csv
     tree.insertCourseraDataset();   // Read data frin Coursera.csv
-    prefix_tree.readAvl(tree.root); // Add each word from course name to TRIE induvidually
-    autoTree.readAvl(tree.root, 1); // TRIE used for autocomplete
+    readAvl(tree.root);              // Initialize Trie and Map with AVL tree
 }
 
 void searchEngine::searchExactCourse()

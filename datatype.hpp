@@ -36,7 +36,7 @@ public:
         subscribers = 0;
     }
 };
-
+/*
 class Dictionary
 {
 public:
@@ -55,7 +55,8 @@ public:
     void HashFunc(string);   //Hash function which will use dictionaries
     void deleteHash();       //deletes a particular hash value, resulting in the deletion of the entire heap belonging to that category
     void inserthash(string); //to be used when adding new hash maps;
-};
+};*/
+
 class Course
 {
 public:
