@@ -30,7 +30,14 @@ public:
     void searchFreeCourses(int);
     void readAvl(Course *);
     string returnInput();
+    void searchCategoryWise();
 };
+
+void searchEngine::searchCategoryWise()
+{
+    string str = returnInput();
+    map.searchMap(str);
+}
 
 void searchEngine::readAvl(Course *obj)
 {
@@ -41,11 +48,13 @@ void searchEngine::readAvl(Course *obj)
         return;
     }
 
-    //prefix_tree.splitString(obj->data.name, obj);
+    prefix_tree.splitString(obj->data.name, obj);
     autoTree.splitStringTwo(obj->data.name, obj);
-    map.HashFunc(obj->data.tags[0]);
-    map.HashFunc(obj->data.tags[1]);
-
+    if (obj->data.isUdemy)
+    {
+        map.inserthash(obj->data.Category_id, obj);
+        map.inserthash(obj->data.Category_id, obj);
+    }
     readAvl(obj->LeftChild);
     readAvl(obj->RightChild);
 }
@@ -101,7 +110,7 @@ void searchEngine::readData()
     tree.insertUdemyDataset();    // Read data fom udemy.csv
     tree.insertCourseraDataset(); // Read data frin Coursera.csv
     readAvl(tree.root);           // Initialize Trie and Map with AVL tree
-    prefix_tree.readAvl(tree.root);
+    //prefix_tree.readAvl(tree.root);
 }
 
 void searchEngine::searchExactCourse()

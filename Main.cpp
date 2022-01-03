@@ -12,7 +12,7 @@ int main()
 {
     searchEngine obj;
     obj.readData();
-    obj.autoComplete();
+    obj.searchCategoryWise();
     return 0;
 }
 
