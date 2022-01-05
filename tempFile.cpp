@@ -1,6 +1,7 @@
 #pragma once
 #include <iostream>
 #include "queue.hpp"
+#include <queue>
 #include "datatype.hpp"
 using namespace std;
 
@@ -486,7 +487,6 @@ public:
 	{
 		if (is_empty())
 		{
-			cout << "Heap is empty\n";
 			return NULL;
 		}
 		Course *result = root->node;
@@ -558,14 +558,22 @@ public:
 
 	void returnList(LinkedList *obj)
 	{
-		Course *temp = get_max();
-		while (!is_empty())
-		{
-			if (temp != NULL)
-			{
-				obj->insert(temp);
-			}
-			temp = get_max();
-		}
-	}
+    Course *temp = get_max();
+    for (size_t i = 0; i < 10; i++)
+    {
+        if (temp != NULL)
+        {
+            obj->insert(temp);
+        }
+        temp = get_max();
+    }
+    
+    temp = obj->first;
+    while (temp != NULL)
+    {
+        insert(temp, temp->data.rating);
+        temp = temp->next;
+    }
+}
+
 };

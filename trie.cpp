@@ -13,7 +13,7 @@ public:
     char c;
     bool isWord;
     trei_Node *arrayPtr;
-    binary_Heap priority_Q;
+    Heap priority_Q;
     trei_Node()
     {
         c = '\0';

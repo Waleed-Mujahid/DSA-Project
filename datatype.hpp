@@ -1,7 +1,6 @@
 #pragma once
 #include <iostream>
 #include <string>
-#include <map>
 using namespace std;
 
 // Creates various data types used to Implement AVL trees for our Dataset
@@ -27,7 +26,6 @@ public:
     float rating;
     string difficulty;
     string tags[2];
-
     Course_data()
     {
         isUdemy = false;
@@ -36,26 +34,6 @@ public:
         subscribers = 0;
     }
 };
-/*
-class Dictionary
-{
-public:
-    map<string, int *> dict;
-    void dictInsert(string, int *);
-    void dictDelete(string);
-};
-
-class Hash_map
-{
-public:
-    Dictionary d1;
-    int size = 4; //used in case more categories are added to the heap(to increase size)
-    //Course*roots=new Course[4];//current data set only has 4 categories so it is initialized at that
-    //Course* sub_root;//sub roots are pointers pointing to the heaps that will be found in each category
-    void HashFunc(string);   //Hash function which will use dictionaries
-    void deleteHash();       //deletes a particular hash value, resulting in the deletion of the entire heap belonging to that category
-    void inserthash(string); //to be used when adding new hash maps;
-};*/
 
 class Course
 {

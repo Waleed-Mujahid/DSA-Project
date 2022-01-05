@@ -12,8 +12,8 @@ class q_Node
 public:
     float count;
     Course *course;
-    q_Node* lchild;
-    q_Node* rchild;
+    q_Node *lchild;
+    q_Node *rchild;
 };
 
 class binary_Heap
@@ -34,8 +34,8 @@ public:
     bool isFull();
     void insert(Course *, float);
     void returnList(LinkedList *);
-    void destroy(q_Node*);
-    void postordertraversal(q_Node*);
+    void destroy(q_Node *);
+    void postordertraversal(q_Node *);
     Course *getMax();
     void increaseCapacity();
 };
@@ -115,7 +115,7 @@ Course *binary_Heap::getMax()
 void binary_Heap::returnList(LinkedList *obj)
 {
     Course *temp = getMax();
-    while (!isEmpty())
+    for (size_t i = 0; i < 10; i++)
     {
         if (temp != NULL)
         {
@@ -123,8 +123,15 @@ void binary_Heap::returnList(LinkedList *obj)
         }
         temp = getMax();
     }
+ 
+    temp = obj->first;
+    while (temp != NULL)
+    {
+        insert(temp, temp->data.rating);
+        temp = temp->next;
+    }
+    
 }
-
 bool binary_Heap::isEmpty()
 {
     return index == 0;
@@ -150,18 +157,18 @@ void binary_Heap::insert(Course *obj, float parameter)
     } while (parent >= 1);
 }
 
-void binary_Heap::postordertraversal(q_Node *btt)//prints the elements of the tree in post order form
-	{
-		if (btt != NULL)
-		{
-			postordertraversal(btt);
-			postordertraversal(btt);
-		}
-	}
-
-void binary_Heap::destroy(q_Node* current)
+void binary_Heap::postordertraversal(q_Node *btt) //prints the elements of the tree in post order form
 {
-    if(!isEmpty())
+    if (btt != NULL)
+    {
+        postordertraversal(btt);
+        postordertraversal(btt);
+    }
+}
+
+void binary_Heap::destroy(q_Node *current)
+{
+    if (!isEmpty())
     {
         postordertraversal(current->lchild);
         postordertraversal(current->rchild);

@@ -12,7 +12,7 @@ class searchEngine
 {
     AVL_Tree tree;
     LinkedList list;
-    binary_Heap max_heap;
+    Heap max_heap;
     Trie prefix_tree, autoTree;
     Hash_map map;
     void traverseAVL(int, Course *);
