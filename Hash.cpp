@@ -5,6 +5,7 @@
 #include <map>
 #include "binary_Heap.cpp"
 #include "tempfile.cpp"
+using namespace std;
 
 class Hash_map
 {
@@ -21,14 +22,16 @@ public:
     }
     int HashFunc(string str) //Hash function for udemy data set
     {
-        int ascii = 0;
-        int length = 3;
-        for (int i = 0; i < length; i++)
-        {
-            ascii = ascii += (int)str[i];
-        }
-        int hashval = ascii % 10;
-        return hashval;
+        if (str.compare("Business Finance") == 0)
+            return 1;   
+        else if (str.compare("Graphic Design") == 0)
+            return 2;
+        else if (str.compare("Musical Instruments") == 0)
+            return 3;
+        else if (str.compare("Web Development") == 0)
+            return 4;
+        else
+            return 5;
     }
     int HashFuncC(string str) //Hash function for coursera
     {

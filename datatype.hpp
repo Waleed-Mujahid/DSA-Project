@@ -58,7 +58,7 @@ public:
             std::cout << "Number of students enrolled: " << data.subscribers << std::endl;
             std::cout << "Year published: " << data.publish_year << std::endl;
             std::cout << "Hours to complete: " << data.duration << std::endl;
-            //std::cout << "isPaid: " << data.isPaid << std::endl << std::endl;
+            std::cout << "Tags : " << data.tags[0] << std::endl;
         }
         else
         {

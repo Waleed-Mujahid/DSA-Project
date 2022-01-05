@@ -421,13 +421,13 @@ void AVL_Tree::deleteNode(Course *obj)
 
 int AVL_Tree::indexSubject(std::string str)
 {
-    if (str.compare("Business Finance"))
+    if (str.compare("Business Finance") == 0)
         return 1;
-    else if (str.compare("Graphic Design"))
+    else if (str.compare("Graphic Design") == 0)
         return 2;
-    else if (str.compare("Musical Instruments"))
+    else if (str.compare("Musical Instruments") == 0)
         return 3;
-    else if (str.compare("Web Development"))
+    else if (str.compare("Web Development") == 0)
         return 4;
     else
         return 5;
@@ -451,11 +451,11 @@ float AVL_Tree::stringToFloat(string str)
 
 int AVL_Tree::indexLevel(std::string str)
 {
-    if (str.compare("Beginner Level"))
+    if (str.compare("Beginner Level")==0)
         return 1;
-    else if (str.compare("Intermediate Level"))
+    else if (str.compare("Intermediate Level") == 0)
         return 2;
-    else if (str.compare("Expert Level") || str.compare("Advanced Level"))
+    else if (str.compare("Expert Level") || str.compare("Advanced Level") == 0)
         return 3;
     else
         return 4;
@@ -528,6 +528,7 @@ void AVL_Tree::insertUdemyDataset()
 
         getline(uFile, line, '\n');
         newNode->data.Category_id = indexSubject(line);
+        newNode->data.tags[0] = line;
 
         srand(newNode->data.subscribers);
         val = rand() % 20 + 30;

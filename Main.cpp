@@ -34,7 +34,7 @@ int main()
             cout << "3. Press 3 or F to browse free courses." << endl;
             cout << "4. Press 4 or E to search exact course names." << endl;
             cout << "5. Press 5 or A to use autocomplete." << endl;
-            cout << "Press q to Quit." << endl;
+            cout << "6. Press q to Quit." << endl;
             c = getchar();
             switch (toupper(c))
             {
