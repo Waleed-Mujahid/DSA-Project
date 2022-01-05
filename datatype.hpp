@@ -53,16 +53,17 @@ public:
         cout << "Rating : " << data.rating << endl;
         if (data.isUdemy)
         {
-            std::cout << "Category : " << data.Category_id << std::endl;
+            std::cout << "Category ID: " << data.Category_id << std::endl;
+            std::cout << "Category: " << data.tags[0] << std::endl;
             std::cout << "Price: " << data.price << std::endl;
             std::cout << "Number of students enrolled: " << data.subscribers << std::endl;
             std::cout << "Year published: " << data.publish_year << std::endl;
             std::cout << "Hours to complete: " << data.duration << std::endl;
-            std::cout << "Tags : " << data.tags[0] << std::endl;
         }
         else
         {
-            cout << "Tags : " << data.tags[0] << ", " << data.tags[1] << endl ;
+            cout << "Category: " << data.tags[0] << endl;
+            cout << "Sub-category: " << data.tags[1] << endl ;
         }
         cout << endl;
     }

@@ -2,7 +2,7 @@
 #include <iostream>
 #include "avl_tree.cpp"
 #include "datatype.hpp"
-#include "binary_Heap.cpp"
+//#include "binary_Heap.cpp"
 #include "tempFile.cpp"
 
 using namespace std;

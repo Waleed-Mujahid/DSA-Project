@@ -2,7 +2,7 @@
 #include <iostream>
 #include "datatype.hpp"
 #include "trie.cpp"
-#include "binary_Heap.cpp"
+//#include "binary_Heap.cpp"
 #include "LinkedList.cpp"
 #include <string>
 #include <algorithm>
@@ -24,7 +24,7 @@ public:
     }
     void readData();
     void searchExactCourse();
-    void browseCourses(string, int, int);
+    void browseCourses(int, int);
     void autoComplete();
     void printCourses_A_Z();
     void searchFreeCourses(int, int);
@@ -48,7 +48,7 @@ void searchEngine::searchCategoryWise()
     cout << endl
          << "Following courses are from : " << str << endl;
     transform(str.begin(), str.end(), str.begin(), ::tolower);
-    map.searchMap(str);
+    map.searchMapC(str);
 }
 
 void searchEngine::readAvl(Course *obj)
@@ -66,6 +66,16 @@ void searchEngine::readAvl(Course *obj)
     {
         map.inserthash(obj->data.Category_id, obj);
         map.inserthash(obj->data.Category_id, obj);
+    }
+    else
+    {
+        string str = obj->data.tags[0];
+        transform(str.begin(), str.end(), str.begin(), ::tolower);
+        map.inserthash2(map.HashFuncC(str), obj);
+
+        str = obj->data.tags[0];
+        transform(str.begin(), str.end(), str.begin(), ::tolower);
+        map.inserthash2(map.HashFuncC(str), obj);
     }
     readAvl(obj->LeftChild);
     readAvl(obj->RightChild);
@@ -135,13 +145,16 @@ void searchEngine::searchExactCourse()
     tree.searchCourse(str);
 }
 
-void searchEngine::browseCourses(string str, int count = 2, int val = 0)
+void searchEngine::browseCourses(int count = 2, int val = 0)
 {
+    string str = returnInput();
+    str = str.substr(0, (int)str.length() - 1);
     transform(str.begin(), str.end(), str.begin(), ::tolower);
     LinkedList *shortList = new LinkedList();
     splitString(str, shortList);
     // Linked list of courses returned, unsorted
     // Binary heap used for sorting
+
     Course *temp = shortList->first;
     while (temp != NULL)
     {
@@ -186,7 +199,7 @@ void searchEngine::autoComplete()
         flag = autoTree.autoCompleteFunc(str, flag);
 
     if (flag) // If above both returns NULL search again using other TRIE
-        browseCourses(str, 3, 1);
+        cout << "No results found. Please refine your search." << endl;
 }
 
 void searchEngine::splitString(string str, LinkedList *shortList)

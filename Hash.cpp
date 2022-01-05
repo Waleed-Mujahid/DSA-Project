@@ -3,7 +3,7 @@
 #include <iostream>
 #include "datatype.hpp"
 #include <map>
-#include "binary_Heap.cpp"
+//#include "binary_Heap.cpp"
 #include "tempfile.cpp"
 using namespace std;
 
@@ -22,13 +22,13 @@ public:
     }
     int HashFunc(string str) //Hash function for udemy data set
     {
-        if (str.compare("Business Finance") == 0)
+        if (str.compare("business finance") == 0)
             return 1;   
-        else if (str.compare("Graphic Design") == 0)
+        else if (str.compare("graphic design") == 0)
             return 2;
-        else if (str.compare("Musical Instruments") == 0)
+        else if (str.compare("musical instruments") == 0)
             return 3;
-        else if (str.compare("Web Development") == 0)
+        else if (str.compare("web development") == 0)
             return 4;
         else
             return 5;
@@ -37,14 +37,15 @@ public:
     {
         int ascii = 0;
         int length = 0;
-        char *c;
-        *c = str[0];
-        while (*c != ' ')
+        char c;
+        size_t i = 0;
+        for (; i < str.length(); i++)
         {
-            *c = str[length];
-            if (*c != ' ')
-                length++;
+            if(isspace(str[i]))
+                break;
         }
+        length = i;
+
         for (int i = 0; i < length; i++)
         {
             ascii = ascii += (int)str[i];
