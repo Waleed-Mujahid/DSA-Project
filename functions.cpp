@@ -27,7 +27,7 @@ public:
     void browseCourses(string, int, int);
     void autoComplete();
     void printCourses_A_Z();
-    void searchFreeCourses(int);
+    void searchFreeCourses(int, int);
     void readAvl(Course *);
     string returnInput();
     void searchCategoryWise();
@@ -36,7 +36,17 @@ public:
 void searchEngine::searchCategoryWise()
 {
     string str = returnInput();
-    cout << endl << "Following courses are from : " << str << endl;
+    for (int i =0 ; i < str.length(); i++)
+    {
+        if (str[i] == '\n') // Remove end line
+        {
+            str.erase(std::remove(str.begin(), str.end(), '\n'), str.end());
+            break;
+        }
+    }
+
+    cout << endl
+         << "Following courses are from : " << str << endl;
     transform(str.begin(), str.end(), str.begin(), ::tolower);
     map.searchMap(str);
 }
@@ -63,6 +73,7 @@ void searchEngine::readAvl(Course *obj)
 
 string searchEngine::returnInput()
 {
+    cin.sync();
     int i = 0;
     char c;
     char str[100];
@@ -73,7 +84,7 @@ string searchEngine::returnInput()
         str[i] = c;
         i++;
     } while (c != '\n');
-
+    
     return str;
 }
 
@@ -89,7 +100,7 @@ void searchEngine::traverseAVL(int parameter, Course *temp)
         max_heap.insert(temp, temp->data.rating);
 }
 
-void searchEngine::searchFreeCourses(int count = 0)
+void searchEngine::searchFreeCourses(int count = 0, int val = 0)
 {
     // Return free courses Max_heap wrt popularity
     traverseAVL(0, tree.root);
@@ -97,7 +108,7 @@ void searchEngine::searchFreeCourses(int count = 0)
 
     // Creates sorted list
     max_heap.returnList(shortList);
-    shortList->printList(count, 0);
+    shortList->printList(count, val);
     shortList->destroy();
 }
 
@@ -112,12 +123,13 @@ void searchEngine::readData()
     tree.insertUdemyDataset();    // Read data fom udemy.csv
     tree.insertCourseraDataset(); // Read data frin Coursera.csv
     readAvl(tree.root);           // Initialize Trie and Map with AVL tree
-    //prefix_tree.readAvl(tree.root);
 }
 
 void searchEngine::searchExactCourse()
 {
     string str = returnInput();
+    str = str.substr(0, (int)str.length() - 1);
+
     // All courses are stored in lowercase
     transform(str.begin(), str.end(), str.begin(), ::tolower);
     tree.searchCourse(str);
@@ -147,9 +159,7 @@ void searchEngine::browseCourses(string str, int count = 2, int val = 0)
 void searchEngine::autoComplete()
 {
     string str = returnInput();
-
-    cout << "Possible suggestions are : " << endl
-         << endl;
+    cout << endl;
 
     int flag = 1;
     size_t i = 0;
@@ -163,6 +173,9 @@ void searchEngine::autoComplete()
         if (isspace(str[i]))
             flag = 0;
     }
+
+    cout << "Possible suggestions for : " << str << " are:" << endl
+         << endl;
 
     if (flag) // Single word autocomplete
     {

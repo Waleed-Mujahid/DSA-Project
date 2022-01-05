@@ -107,10 +107,6 @@ public:
     void insert(Course *);
     void deleteNode(std::string);
     void destroy(); //basic linked list functionalities
-    int indexSubject(std::string);
-    int stringToint(std::string);
-    int indexLevel(std::string);
-    void insertFile(std::string);
 };
 
 class stackNode // node to implement Stack datastructure
