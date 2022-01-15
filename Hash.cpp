@@ -2,7 +2,7 @@
 #include <cstring>
 #include <iostream>
 #include "datatype.hpp"
-#include <map>
+
 //#include "binary_Heap.cpp"
 #include "tempfile.cpp"
 using namespace std;
@@ -14,7 +14,6 @@ public:
     int size = 5;   //used in case more categories are added to the heap(to increase size)
     Heap *hashPtr;  //for udemy courses
     Heap *hashPtr2; //for coursera courses
-    Course *sub_root;
     Hash_map()
     {
         hashPtr = new Heap[size];
@@ -59,7 +58,7 @@ public:
     }
     void inserthash2(int index, Course *obj) //to be used when adding new hash maps;
     {
-        hashPtr2[index - 1].insert(obj, obj->data.rating);
+        hashPtr2[index].insert(obj, obj->data.rating);
     }
 
     void searchMap(string str) //searchesudemy courses
@@ -75,8 +74,23 @@ public:
     void searchMapC(string str) //searches coursera courses
     {
         int index = HashFuncC(str);
+        string str1  = hashPtr2[index].root->node->data.tags[0];
+        size_t i = 0;
+        for (; i < str.length(); i++)
+        {
+            if(isspace(str[i]))
+                break;
+        }
+        str1 = str1.substr(0,i);
+        transform(str1.begin(), str1.end(), str1.begin(), ::tolower);
+        if (str != str1)
+        {
+            cout << "No results found. Please refine your query." << endl;
+            return;
+        }
+
         LinkedList *newList = new LinkedList();
-        hashPtr2[index - 1].returnList(newList);
+        hashPtr2[index].returnList(newList);
         cout << "Display first how many results?(Press 0 if you wish to display all)" << endl;
         int count = 0;
         cin >> count;

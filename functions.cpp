@@ -12,7 +12,7 @@ class searchEngine
 {
     AVL_Tree tree;
     LinkedList list;
-    Heap max_heap;
+    Heap* max_heap;
     Trie prefix_tree, autoTree;
     Hash_map map;
     void traverseAVL(int, Course *);
@@ -107,7 +107,7 @@ void searchEngine::traverseAVL(int parameter, Course *temp)
     traverseAVL(parameter, temp->RightChild);
 
     if (temp->data.price == 0) // Inserts course only if it is free
-        max_heap.insert(temp, temp->data.rating);
+        max_heap->insert(temp, temp->data.rating);
 }
 
 void searchEngine::searchFreeCourses(int count = 0, int val = 0)
@@ -117,9 +117,10 @@ void searchEngine::searchFreeCourses(int count = 0, int val = 0)
     LinkedList *shortList = new LinkedList();
 
     // Creates sorted list
-    max_heap.returnList(shortList);
+    max_heap->returnList(shortList);
     shortList->printList(count, val);
     shortList->destroy();
+    free(max_heap);
 }
 
 void searchEngine::printCourses_A_Z()
@@ -151,6 +152,7 @@ void searchEngine::browseCourses(int count = 2, int val = 0)
     str = str.substr(0, (int)str.length() - 1);
     transform(str.begin(), str.end(), str.begin(), ::tolower);
     LinkedList *shortList = new LinkedList();
+    Heap * tempHeap = new Heap();
     splitString(str, shortList);
     // Linked list of courses returned, unsorted
     // Binary heap used for sorting
@@ -158,15 +160,16 @@ void searchEngine::browseCourses(int count = 2, int val = 0)
     Course *temp = shortList->first;
     while (temp != NULL)
     {
-        max_heap.insert(temp, temp->data.counter);
+        tempHeap->insert(temp, temp->data.counter);
         temp = temp->next;
-    }
+   }
 
     shortList->destroy(); // Destroy unsorted list
     // Creates sorted list
-    max_heap.returnList(shortList);
+    tempHeap->returnList(shortList);
     shortList->printList(count, val);
     shortList->destroy();
+    free(tempHeap);
 }
 
 void searchEngine::autoComplete()

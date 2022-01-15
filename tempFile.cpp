@@ -559,7 +559,7 @@ public:
 	void returnList(LinkedList *obj)
 	{
     Course *temp = get_max();
-    for (size_t i = 0; i < 10; i++)
+    while(temp!= NULL)
     {
         if (temp != NULL)
         {

@@ -21,7 +21,10 @@ void LinkedList::printList(int numOfTimes, int val)
     int x = 0;
     Course *temp = first;
     if (isEmpty())
+    {
+        cout << "No results found."<< endl;
         return;
+    }
 
     if (numOfTimes == 0)
     {
