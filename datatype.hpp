@@ -32,6 +32,7 @@ public:
         counter = 0;
         rating = 0;
         subscribers = 0;
+        price = 0;
     }
 };
 

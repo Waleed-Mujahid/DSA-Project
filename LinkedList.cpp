@@ -48,7 +48,7 @@ void LinkedList::printList(int numOfTimes, int val)
             temp = temp->next;
         }
     }
-    cout << endl;
+    //cout << endl;
 }
 
 void LinkedList::SearchList(std::string value)

@@ -78,15 +78,12 @@ public:
     }
     void searchMapC(string str) //searches coursera courses
     {
+        string str1;
         int index = HashFuncC(str);
-        string str1  = hashPtr2[index].root->node->data.tags[0];
-        size_t i = 0;
-        for (; i < str.length(); i++)
-        {
-            if(isspace(str[i]))
-                break;
-        }
-        str1 = str1.substr(0,i);
+        if (! hashPtr2[index].is_empty() )
+            str1  = hashPtr2[index].root->node->data.tags[0];
+        int len = str.length();
+        str1 = str1.substr(0,len);
         transform(str1.begin(), str1.end(), str1.begin(), ::tolower);
         if (str != str1)
         {
@@ -95,10 +92,11 @@ public:
         }
 
         LinkedList *newList = new LinkedList();
-        hashPtr2[index].returnList(newList);
-        cout << "Display first how many results?(Press 0 if you wish to display all)" << endl;
-        int count = 0;
-        cin >> count;
+        if (! hashPtr2[index].is_empty() )
+            hashPtr2[index].returnList(newList);
+        //cout << "Display first how many results?(Press 0 if you wish to display all)" << endl;
+        int count = 2;
+        //cin >> count;
         newList->printList(count, 0);
     }
 };
