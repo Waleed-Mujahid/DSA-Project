@@ -1,5 +1,6 @@
 #pragma once
 #include <iostream>
+#include<chrono>
 #include "datatype.hpp"
 #include "trie.cpp"
 //#include "binary_Heap.cpp"
@@ -9,6 +10,8 @@
 #include <chrono>
 #include "tempFile.cpp"
 #include "Hash.cpp"
+
+
 class searchEngine
 {
     AVL_Tree tree;
@@ -127,10 +130,12 @@ void searchEngine::searchFreeCourses(int count = 0, int val = 0)
     // Return free courses Max_heap wrt popularity
     traverseAVL(0, tree.root);
     LinkedList *shortList = new LinkedList();
-
+    auto t1 = std::chrono::high_resolution_clock::now();
     // Creates sorted list
     max_heap->returnList(shortList);
     shortList->printList(count, val);
+    auto t2 = std::chrono::high_resolution_clock::now();
+    auto duration = std::chrono::duration_cast<std::chrono::milliseconds>(t2 - t1);
     shortList->destroy();
 
     auto stop = std::chrono::high_resolution_clock::now();
@@ -158,22 +163,7 @@ void searchEngine::searchExactCourse()
     string str = returnInput();
     str = str.substr(0, (int)str.length() - 1);
     cout << endl;
-    // All courses are stored in lowercase
-    transform(str.begin(), str.end(), str.begin(), ::tolower);
-    auto start = std::chrono::high_resolution_clock::now();
-
-    tree.searchCourse(str);
-    auto stop = std::chrono::high_resolution_clock::now();
-    auto duration = std::chrono::duration_cast<std::chrono::microseconds>(stop - start);
-    cout << "Time taken by function: " << (float)duration.count() / 1000000 << " seconds" << endl;
-}
-
-void searchEngine::browseCourses(int count = 2, int val = 0)
-{
     string str = returnInput();
-    str = str.substr(0, (int)str.length() - 1);
-    transform(str.begin(), str.end(), str.begin(), ::tolower);
-    cout << endl;
     auto start = std::chrono::high_resolution_clock::now();
 
     LinkedList *shortList = new LinkedList();
@@ -181,7 +171,6 @@ void searchEngine::browseCourses(int count = 2, int val = 0)
     splitString(str, shortList);
     // Linked list of courses returned, unsorted
     // Binary heap used for sorting
-
     Course *temp = shortList->first;
     while (temp != NULL)
     {
@@ -192,12 +181,8 @@ void searchEngine::browseCourses(int count = 2, int val = 0)
     shortList->destroy(); // Destroy unsorted list
     // Creates sorted list
     tempHeap->returnList(shortList);
-    shortList->printList(count, val);
+    shortList->printList(3, 1);
     tree.searchCourse(str);
-    auto stop = std::chrono::high_resolution_clock::now();
-    auto duration = std::chrono::duration_cast<std::chrono::microseconds>(stop - start);
-    cout << "Time taken by function: " << (float)duration.count() / 1000000 << " seconds" << endl;
-
     shortList->destroy();
     free(tempHeap);
     
@@ -211,6 +196,7 @@ void searchEngine::autoComplete()
 
     int flag = 1;
     size_t i = 0;
+    auto t1 = std::chrono::high_resolution_clock::now();
     for (; i < str.length(); i++)
     {
         if (str[i] == '\n') // Remove end line
@@ -239,6 +225,9 @@ void searchEngine::autoComplete()
     cout << "Time taken by function: " << (float)duration.count() / 1000000 << " seconds" << endl;
     if (flag) // If above both returns NULL search again using other TRIE
         cout << "No results found. Please refine your search." << endl;
+    auto t2 = std::chrono::high_resolution_clock::now();
+    auto duration = std::chrono::duration_cast<std::chrono::milliseconds>(t2 - t1);
+    cout<<"Time taken for this is "<< duration.count()<<endl;
 }
 
 void searchEngine::splitString(string str, LinkedList *shortList)
